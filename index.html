@@ -1,0 +1,1668 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OKR → Portfolio v2.0 | Tavoitteista toteutukseen</title>
+<style>
+:root{
+  --bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#dfe4ec;
+  --nav:#122033;--accent:#3157d5;--accent2:#2446b6;--soft:#eef2ff;
+  --green:#027a48;--greenbg:#ecfdf3;--amber:#b54708;--amberbg:#fff7e6;
+  --red:#b42318;--redbg:#fff0ee;--purple:#7a5af8;--bluebg:#eff8ff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+header{background:linear-gradient(115deg,#122033,#223756);color:white;padding:20px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+header h1{font-size:22px;margin:0 0 4px} header p{margin:0;color:#cbd5e1}
+.header-badge{font-size:12px;padding:6px 10px;border:1px solid #ffffff35;border-radius:999px;color:#e2e8f0;white-space:nowrap}
+.tabs{display:flex;gap:6px;padding:11px 18px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10;overflow:auto}
+.tabs button,button,.filebtn{border:1px solid var(--line);background:#fff;color:#344054;padding:8px 11px;border-radius:8px;cursor:pointer;font:inherit;font-weight:600;white-space:nowrap}
+.tabs button.active,.primary{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}
+button:hover{filter:brightness(.98)} .danger{color:var(--red);background:#fff5f4}.ghost{background:#f8fafc}
+.wrap{max-width:1550px;margin:auto;padding:18px}.view{display:none}.view.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.kpi,.panel{background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;box-shadow:0 2px 8px #10182808}
+.kpi .label{color:var(--muted);font-size:12px}.kpi b{display:block;font-size:26px;margin-top:5px}
+h2,h3,h4{margin-top:0}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.note,.small{color:var(--muted);font-size:12px}.section-note{margin:-4px 0 14px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:9px 8px;border-bottom:1px solid #edf0f4;text-align:left;vertical-align:top}
+th{font-size:12px;color:#667085;background:#f8fafc;position:static;border-bottom:1px solid #d0d5dd}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px;background:#fff}
+.pill{display:inline-block;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:700;background:#eef2f6}
+.p1{background:#dcfae6;color:#05603a}.p2{background:#e0edff;color:#1849a9}.p3{background:#fef0c7;color:#93370d}.p4{background:#fee4e2;color:#912018}
+.score{font-weight:800}.mono{font-variant-numeric:tabular-nums}
+.objcard{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.objhead{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.objtitle{font-size:16px;font-weight:800}
+.objmeta{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}.krlist{margin:10px 0 0;padding-left:19px}.krlist li{margin:5px 0}
+.bar{height:9px;border-radius:10px;background:#edf1f5;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}
+.flow{display:grid;grid-template-columns:repeat(7,1fr);align-items:center;gap:4px;margin-top:8px}
+.flow .step{border:1px solid var(--line);background:#f9fafb;border-radius:10px;padding:10px;text-align:center;min-height:76px}.flow .step b{font-size:18px;display:block;margin-top:5px}
+.flow .arrow{text-align:center;color:#98a2b3;font-size:18px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{display:flex;flex-direction:column;gap:4px;color:#475467;font-size:12px;font-weight:600}
+input,select,textarea{padding:8px;border:1px solid #cfd7e3;border-radius:7px;font:inherit;color:var(--ink);background:#fff}textarea{min-height:68px;resize:vertical}
+.full{grid-column:1/-1}.right{text-align:right}.criteria{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.criterion{background:#f8fafc;border:1px solid #e5e7eb;border-radius:9px;padding:9px}
+dialog{border:0;border-radius:14px;box-shadow:0 20px 70px #0005;max-width:900px;width:95%;padding:18px}dialog::backdrop{background:#10182866}
+.krrow{display:grid;grid-template-columns:2.4fr .8fr .8fr .8fr 34px;gap:6px;align-items:end;margin:6px 0}
+.krrow button{padding:7px}
+.rolebox{grid-column:1/-1;background:#fafbff;border:1px solid var(--line);border-radius:10px;padding:11px}.roleinputs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.matrix{position:relative;height:500px;border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}
+.matrix:before,.matrix:after{content:"";position:absolute;background:#d0d5dd}.matrix:before{left:50%;top:0;bottom:0;width:1px}.matrix:after{top:50%;left:0;right:0;height:1px}
+.quad{position:absolute;font-size:12px;color:#667085;font-weight:700}.qtl{left:13px;top:11px}.qtr{right:13px;top:11px}.qbl{left:13px;bottom:11px}.qbr{right:13px;bottom:11px}
+.dot{position:absolute;width:18px;height:18px;background:var(--accent);border:3px solid white;border-radius:50%;box-shadow:0 2px 6px #0004;transform:translate(-50%,50%)}
+.dotlabel{position:absolute;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11px;background:#ffffffdd;padding:2px 5px;border-radius:5px;transform:translate(-50%,calc(50% + 18px))}
+.axisx,.axisy{position:absolute;font-size:11px;color:#667085;font-weight:700}.axisx{bottom:3px;left:50%;transform:translateX(-50%)}.axisy{left:4px;top:50%;transform:rotate(-90deg) translateX(-50%);transform-origin:left top}
+.road{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px}.roadgrid,.resourcegrid{display:grid;grid-template-columns:245px repeat(12,minmax(94px,1fr));min-width:1380px}
+.cell{min-height:53px;border-right:1px solid #edf0f4;border-bottom:1px solid #edf0f4;padding:6px}.head{background:#f8fafc;font-weight:800;min-height:38px}
+.goalhead{background:#e9eefc;font-weight:800;border-top:2px solid #c5cff6}.goalmeta{display:block;color:var(--muted);font-weight:400;font-size:11px;margin-top:2px}
+.actionlabel{padding-left:17px;position:relative}.actionlabel:before{content:"↳";position:absolute;left:5px;color:#98a2b3}
+.actioncard{background:#e8edff;border:1px solid #b9c5fa;border-radius:7px;padding:6px;cursor:grab}.actioncard small{display:block;color:#667085}
+.activecell{background:#f5f7ff}.unscheduled{border-left:3px solid #f79009}
+.util-ok{background:var(--greenbg)}.util-warn{background:var(--amberbg)}.util-over{background:var(--redbg);color:var(--red)}
+.capacity-table input{width:68px;text-align:right}.chartbox{min-height:430px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px}
+.chartbox svg{width:100%;min-width:920px;height:auto;display:block}.legend{display:flex;gap:13px;flex-wrap:wrap;margin:10px 0}
+.legenditem{display:flex;align-items:center;gap:5px}.legendline{width:22px;height:3px;border-radius:3px;display:inline-block}.summarygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:10px}
+.summarycard{border:1px solid var(--line);border-radius:9px;padding:9px;background:#fafbfc}.summarycard b{display:block;margin-bottom:3px}
+.svg-grid{stroke:#e8ecf2;stroke-width:1}.svg-axis{stroke:#aab3c0}.svg-label{fill:#667085;font-size:12px}.svg-ref{stroke:#b42318;stroke-width:1.5;stroke-dasharray:7 5}
+.weightgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.weight{border:1px solid var(--line);background:#fafbfc;border-radius:9px;padding:10px}.weight b{display:block;margin-bottom:6px}
+input[type=range]{padding:0;width:100%}.switch{display:inline-flex;align-items:center;gap:5px}
+.switch input{width:auto}.rank{font-size:16px;font-weight:800;color:#475467}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.grid2,.criteria,.weightgrid{grid-template-columns:1fr}.roleinputs{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg)}.formgrid{grid-template-columns:1fr}.full,.rolebox{grid-column:auto}.krrow{grid-template-columns:1fr 1fr}.krrow input:first-child{grid-column:1/-1}th{position:static}}
+
+.tree-wrap{display:flex;flex-direction:column;gap:12px}
+.tree-objective{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tree-objective-head{display:grid;grid-template-columns:minmax(320px,1.8fr) minmax(120px,.55fr) minmax(120px,.55fr) minmax(120px,.55fr);gap:10px;align-items:center;padding:12px 14px;background:#eef2ff;border-bottom:1px solid #d7def8}
+.tree-objective-title{font-weight:800;font-size:15px;display:flex;align-items:center;gap:8px}
+.tree-toggle{width:26px;height:26px;padding:0;border-radius:7px;background:#fff;border:1px solid #cbd5e1;display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+.tree-meta{text-align:right}
+.tree-children{padding:0}
+.tree-action{display:grid;grid-template-columns:minmax(300px,1.8fr) minmax(120px,.55fr) minmax(120px,.55fr) minmax(120px,.55fr);gap:10px;align-items:center;padding:10px 14px 10px 42px;border-bottom:1px solid #edf0f4;position:relative}
+.tree-action:last-child{border-bottom:0}
+.tree-action:before{content:"↳";position:absolute;left:21px;color:#98a2b3;font-size:16px}
+.tree-action-name{font-weight:700}
+.tree-empty{padding:12px 14px 12px 42px;color:var(--muted);font-size:12px}
+.tree-header{display:grid;grid-template-columns:minmax(320px,1.8fr) minmax(120px,.55fr) minmax(120px,.55fr) minmax(120px,.55fr);gap:10px;padding:0 14px 7px;color:#667085;font-size:12px;font-weight:700}
+.tree-header div:not(:first-child){text-align:right}
+@media(max-width:900px){
+  .tree-header{display:none}
+  .tree-objective-head,.tree-action{grid-template-columns:1fr;gap:5px}
+  .tree-meta{text-align:left;padding-left:34px}
+  .tree-action{padding-left:42px}
+}
+
+
+.strategy-tree-wrap{overflow:auto;padding:8px 4px 24px}
+.strategy-tree{min-width:1100px;padding:8px 18px 24px}
+.strategy-root-wrap{display:flex;justify-content:center;position:relative;padding-bottom:46px}
+.strategy-root-wrap:after{content:"";position:absolute;left:50%;bottom:0;width:2px;height:46px;background:#98a2b3}
+.strategy-root{min-width:320px;max-width:520px;background:linear-gradient(135deg,#122033,#3157d5);color:#fff;border-radius:16px;padding:18px 22px;text-align:center;box-shadow:0 8px 24px #1018281f}
+.strategy-root .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#d0d5dd;font-weight:700}
+.strategy-root .title{font-size:20px;font-weight:800;margin:4px 0}
+.strategy-root .sub{font-size:12px;color:#e4e7ec}
+.strategy-branches{position:relative;display:flex;gap:26px;align-items:flex-start;justify-content:center;padding-top:34px}
+.strategy-branches:before{content:"";position:absolute;top:0;left:5%;right:5%;height:2px;background:#98a2b3}
+.strategy-branch{position:relative;min-width:230px;max-width:290px;flex:1}
+.strategy-branch:before{content:"";position:absolute;top:-34px;left:50%;width:2px;height:34px;background:#98a2b3}
+.strategy-objective-card{position:relative;background:#eef2ff;border:1px solid #c7d2fe;border-radius:13px;padding:12px 13px;box-shadow:0 2px 6px #1018280a}
+.strategy-objective-card .objective-name{font-weight:800;font-size:14px;line-height:1.3}
+.strategy-objective-card .objective-meta{margin-top:6px;display:flex;gap:5px;flex-wrap:wrap}
+.strategy-objective-card:after{content:"";position:absolute;left:50%;bottom:-24px;width:2px;height:24px;background:#b7c0cc}
+.strategy-actions{position:relative;margin-top:24px;padding-top:18px;display:flex;flex-direction:column;gap:10px}
+.strategy-actions:before{content:"";position:absolute;left:50%;top:0;width:2px;height:18px;background:#b7c0cc}
+.strategy-action-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:11px;padding:10px 11px;box-shadow:0 1px 4px #1018280a}
+.strategy-action-card:before{content:"";position:absolute;left:50%;top:-11px;width:2px;height:11px;background:#d0d5dd}
+.strategy-action-card .action-name{font-weight:700;font-size:13px;line-height:1.3}
+.strategy-action-card .action-meta{margin-top:5px;color:var(--muted);font-size:11px}
+.strategy-action-card.selected{border-color:#86efac;background:#f0fdf4}
+.strategy-action-card.unscheduled{border-left:4px solid #f79009}
+.strategy-no-actions{background:#fafafa;border:1px dashed #d0d5dd;border-radius:10px;padding:10px;text-align:center;color:var(--muted);font-size:12px}
+.strategy-legend{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 14px}
+.strategy-legend span{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:#667085}
+.strategy-legend i{width:12px;height:12px;border-radius:3px;border:1px solid #d0d5dd;display:inline-block}
+@media(max-width:900px){
+  .strategy-tree{min-width:900px}
+  .strategy-branches{gap:18px}
+  .strategy-branch{min-width:210px}
+}
+
+
+.bc-layout{display:grid;grid-template-columns:minmax(420px,1.15fr) minmax(360px,.85fr);gap:14px}
+.bc-section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.bc-section h4{margin:0 0 8px}
+.bc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.bc-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.bc-summary{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.bc-kpi{border:1px solid var(--line);background:#fafbfc;border-radius:10px;padding:11px}
+.bc-kpi .bc-label{font-size:11px;color:var(--muted);font-weight:700}
+.bc-kpi .bc-value{font-size:22px;font-weight:800;margin-top:4px}
+.bc-kpi.good{background:var(--greenbg);border-color:#abefc6}
+.bc-kpi.warn{background:var(--amberbg);border-color:#fedf89}
+.bc-kpi.bad{background:var(--redbg);border-color:#fecdca}
+.bc-callout{border-left:4px solid var(--accent);background:#f8faff;border-radius:8px;padding:10px 12px;margin:10px 0}
+.bc-callout.mandatory{border-left-color:#7a5af8;background:#f4f3ff}
+.bc-cashflow{width:100%;border-collapse:collapse;margin-top:8px}
+.bc-cashflow th,.bc-cashflow td{padding:7px;border-bottom:1px solid #edf0f4;text-align:right}
+.bc-cashflow th:first-child,.bc-cashflow td:first-child{text-align:left}
+.bc-type-banner{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.bc-help{font-size:11px;color:var(--muted);margin-top:3px}
+.bc-riskline{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:end}
+.bc-arrow{padding-bottom:9px;color:#98a2b3;font-weight:800}
+.bc-saved{font-size:12px;color:var(--green);font-weight:700}
+@media(max-width:1000px){
+  .bc-layout,.bc-grid,.bc-grid3,.bc-summary{grid-template-columns:1fr}
+}
+
+
+.exec-summary{background:linear-gradient(135deg,#ffffff,#f8faff);border:1px solid #cfd8f6;border-radius:14px;padding:17px 18px;box-shadow:0 3px 10px #1018280a}
+.exec-summary-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px}
+.exec-summary-head h3{margin:0}.exec-summary-body{font-size:14px;line-height:1.55;color:#344054}.exec-summary-body p{margin:8px 0}.exec-summary-body b{color:#172033}
+.exec-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.exec-insight{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px}.exec-insight .label{font-size:11px;color:var(--muted);font-weight:700}.exec-insight .value{font-size:15px;font-weight:800;margin-top:3px}
+.exec-actions{margin-top:12px;padding-top:10px;border-top:1px solid #e4e7ec}.exec-actions ul{margin:6px 0 0;padding-left:19px}.exec-actions li{margin:5px 0}.exec-status{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;background:#eef2ff;color:#3448a0}
+@media(max-width:900px){.exec-insights{grid-template-columns:1fr}}
+
+
+.ai-export-tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.ai-export-btn{background:#3157d5;color:#fff;border-color:#3157d5}
+.ai-export-status{font-size:11px;color:var(--green);font-weight:700}
+
+
+.help-wrap{max-width:1050px;margin:auto}
+.help-intro{background:linear-gradient(135deg,#122033,#3157d5);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px}
+.help-intro h2{margin:0 0 6px}.help-intro p{margin:0;color:#e4e7ec;line-height:1.5}
+.help-step{background:#fff;border:1px solid var(--line);border-radius:13px;padding:16px 18px;margin-bottom:11px;display:grid;grid-template-columns:44px 1fr;gap:13px}
+.help-num{width:36px;height:36px;border-radius:50%;background:#eef2ff;color:#3157d5;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
+.help-step h3{margin:1px 0 6px;font-size:16px}
+.help-step p{margin:0;color:#475467;line-height:1.55}
+.help-step b{color:#172033}
+.help-flow{margin-top:14px;background:#f8fafc;border:1px solid var(--line);border-radius:11px;padding:12px 14px;text-align:center;font-weight:700;color:#344054;line-height:1.8}
+
+</style>
+</head>
+<body>
+<header>
+  <div><h1>OKR → Portfolio</h1><p>Tavoitteista priorisoituihin toimenpiteisiin, kapasiteettiin ja toteutukseen</p></div>
+  <div class="header-badge">Data tallentuu tähän selaimeen</div>
+</header>
+
+<nav class="tabs">
+  <button data-v="objectives" class="active">OKR-tavoitteet</button>
+  <button data-v="objectivePriority">Tavoitteiden priorisointi</button>
+  <button data-v="actions">Toimenpiteet</button>
+  <button data-v="actionPriority">Toimenpiteiden priorisointi</button>
+  <button data-v="businessCase">Business case</button>
+  <button data-v="resources">Resurssit</button>
+  <button data-v="roadmap">Roadmap</button>
+  <button data-v="utilization">Käyttöaste</button>
+  <button data-v="impact">Vaikuttavuus</button>
+  <button data-v="tree">Tavoitepuu</button>
+  <button data-v="tree2">Tavoitepuu2</button>
+  <button data-v="dashboard">Kokonaisuus</button>
+  <button data-v="settings">Asetukset</button>
+  <button data-v="instructions">Ohjeet</button>
+</nav>
+
+<main class="wrap">
+<section id="dashboard" class="view">
+  <div class="grid" id="dashboardKpis"></div>
+
+  <div class="exec-summary" style="margin-top:12px">
+    <div class="exec-summary-head">
+      <div><h3>Johdon yhteenveto</h3><div class="small">Automaattisesti muodostettu koko salkun tämänhetkisestä tilanteesta</div></div>
+      <div class="ai-export-tools">
+        <button class="ai-export-btn" onclick="exportAIAnalysis()" title="Lataa jäsennelty JSON-paketti ulkopuolista LLM-analyysiä varten">Vie AI-analyysiin</button>
+        <span class="exec-status">LIVE</span>
+        <span id="aiExportStatus" class="ai-export-status"></span>
+      </div>
+    </div>
+    <div id="executiveSummary" class="exec-summary-body"></div>
+    <div id="executiveInsights" class="exec-insights"></div>
+    <div id="executiveActions" class="exec-actions"></div>
+  </div>
+
+  <div class="panel" style="margin-top:12px">
+    <h3>Johtamisen ketju</h3>
+    <div class="flow" id="flow"></div>
+  </div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="panel"><h3>Tavoitteiden prioriteetti</h3><div id="dashboardObjectives"></div></div>
+    <div class="panel"><h3>Valittu toteutussalkku</h3><div id="dashboardPortfolio"></div></div>
+  </div>
+</section>
+
+<section id="objectives" class="view active">
+  <div class="toolbar">
+    <button class="primary" onclick="openObjective()">+ Lisää OKR-tavoite</button>
+  </div>
+  <p class="section-note">Objective kertoo suunnan. Key Results tekevät tavoitteen mitattavaksi. Tavoite priorisoidaan ennen sen alle ehdotettujen toimenpiteiden valintaa.</p>
+  <div id="objectiveList"></div>
+</section>
+
+
+<section id="tree" class="view">
+  <div class="toolbar">
+    <h3 style="margin:0;margin-right:auto">Tavoitteet ja niihin liittyvät toimenpiteet</h3>
+    <button onclick="expandAllTree()">Avaa kaikki</button>
+    <button onclick="collapseAllTree()">Sulje kaikki</button>
+  </div>
+  <p class="section-note">Puun ylätaso muodostuu OKR-tavoitteista. Kunkin tavoitteen alla näkyvät siihen kytketyt toimenpiteet sekä niiden valinta-, prioriteetti- ja aikataulutustiedot.</p>
+  <div class="tree-header">
+    <div>Tavoite / toimenpide</div>
+    <div>Prioriteetti</div>
+    <div>Valinta</div>
+    <div>Aikataulu</div>
+  </div>
+  <div id="treeView" class="tree-wrap"></div>
+</section>
+
+
+<section id="tree2" class="view">
+  <div class="toolbar">
+    <h3 style="margin:0;margin-right:auto">Tavoitepuu2 — strategiasta toimenpiteisiin</h3>
+  </div>
+  <p class="section-note">Hierarkia näyttää strategisen ketjun puumaisena rakenteena: ylimpänä yhtiön strategia, sen alla OKR-tavoitteet ja niiden alla tavoitteisiin kytketyt toimenpiteet.</p>
+  <div class="strategy-legend">
+    <span><i style="background:#eef2ff;border-color:#c7d2fe"></i> OKR-tavoite</span>
+    <span><i style="background:#f0fdf4;border-color:#86efac"></i> Valittu toimenpide</span>
+    <span><i style="background:#fff"></i> Ei valittu</span>
+    <span><i style="background:#fff;border-left:4px solid #f79009"></i> Ei aikataulutettu</span>
+  </div>
+  <div class="strategy-tree-wrap">
+    <div id="tree2View" class="strategy-tree"></div>
+  </div>
+</section>
+
+<section id="objectivePriority" class="view">
+  <div class="grid2">
+    <div class="panel">
+      <h3>Tavoitteiden prioriteettijärjestys</h3>
+      <div id="objectivePriorityTable" class="tablewrap"></div>
+    </div>
+    <div class="panel">
+      <h3>Value–Complexity</h3>
+      <div class="matrix" id="objectiveMatrix">
+        <div class="quad qtl">Korkea arvo / matala kompleksisuus</div>
+        <div class="quad qtr">Korkea arvo / korkea kompleksisuus</div>
+        <div class="quad qbl">Rajattu arvo / matala kompleksisuus</div>
+        <div class="quad qbr">Rajattu arvo / korkea kompleksisuus</div>
+        <div class="axisx">Complexity →</div><div class="axisy">Value →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="actions" class="view">
+  <div class="toolbar">
+    <button class="primary" onclick="openAction()">+ Lisää toimenpide</button>
+    <button onclick="exportActionsCSV()">Vie CSV</button>
+  </div>
+  <p class="section-note">Jokainen toimenpide kytketään OKR-tavoitteeseen. Valinta toteutussalkkuun on erillinen päätös priorisoinnin jälkeen.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Valittu</th><th>Toimenpide</th><th>OKR-tavoite</th><th>Budjetti</th><th>Kesto</th><th>Resurssit / kk</th><th>Pisteet</th><th></th></tr></thead>
+      <tbody id="actionRows"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="actionPriority" class="view">
+  <div class="panel">
+    <div class="toolbar">
+      <h3 style="margin:0;margin-right:auto">Toimenpiteiden prioriteettijärjestys</h3>
+      <button onclick="selectTopActions()">Valitse korkean prioriteetin toimenpiteet</button>
+    </div>
+    <p class="section-note">Tavoitteen prioriteetti tulee pisteytykseen automaattisesti. Näin strateginen valinta ohjaa myös alemman tason toimenpiteitä.</p>
+    <div id="actionPriorityTable" class="tablewrap"></div>
+  </div>
+</section>
+
+
+<section id="businessCase" class="view">
+  <div class="toolbar">
+    <h3 style="margin:0;margin-right:auto">Toimenpiteen Business case</h3>
+    <span id="bcSaved" class="bc-saved"></span>
+  </div>
+  <p class="section-note">Valitse toimenpide ja arvioi sen taloudelliset hyödyt, kustannukset sekä sääntely-/jatkuvuusperuste. Pakollisissa toimenpiteissä ROI on lisätieto — ensisijainen kysymys on vaatimuksen täyttäminen hallitulla kustannuksella ja riskillä.</p>
+
+  <div class="panel" style="margin-bottom:12px">
+    <label style="max-width:700px">Toimenpide
+      <select id="bcActionSelect" onchange="loadBusinessCase(this.value)"></select>
+    </label>
+    <div id="bcActionContext" class="bc-type-banner"></div>
+  </div>
+
+  <div class="bc-layout">
+    <div>
+      <div class="bc-section">
+        <h4>1. Business case -tyyppi ja perusparametrit</h4>
+        <div class="bc-grid">
+          <label>Case-tyyppi
+            <select id="bcType" onchange="bcFieldChanged()">
+              <option value="business">Liiketoimintahyöty</option>
+              <option value="regulation">Pakollinen – sääntely</option>
+              <option value="continuity">Pakollinen – jatkuvuus / resilienssi</option>
+              <option value="risk">Riskin pienentäminen</option>
+              <option value="other">Muu</option>
+            </select>
+          </label>
+          <label>Tarkasteluhorisontti (vuotta)
+            <input id="bcHorizon" type="number" min="1" max="10" step="1" onchange="bcFieldChanged()">
+          </label>
+          <label>Diskonttokorko %
+            <input id="bcDiscount" type="number" min="0" max="50" step="0.1" onchange="bcFieldChanged()">
+          </label>
+          <label>Hyötyjen realisoituminen
+            <select id="bcRamp" onchange="bcFieldChanged()">
+              <option value="1">Täysi hyöty heti valmistumisen jälkeen</option>
+              <option value="0.75">1. vuoden hyöty 75 %</option>
+              <option value="0.5">1. vuoden hyöty 50 %</option>
+              <option value="0.25">1. vuoden hyöty 25 %</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="bc-section">
+        <h4>2. Kustannukset</h4>
+        <div class="bc-grid3">
+          <label>Investointi / toteutuskustannus €
+            <input id="bcInvestment" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+            <span class="bc-help">Oletuksena toimenpiteen budjetti.</span>
+          </label>
+          <label>Vuosittainen ylläpito / lisäkustannus €
+            <input id="bcAnnualCost" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+          <label>Muut kertakustannukset €
+            <input id="bcOtherOneOff" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+        </div>
+      </div>
+
+      <div class="bc-section">
+        <h4>3. Vuosittaiset hyödyt</h4>
+        <div class="bc-grid">
+          <label>Kustannussäästö €
+            <input id="bcSavings" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+          <label>Lisäkate / tulosvaikutus €
+            <input id="bcMargin" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+            <span class="bc-help">Käytä mieluummin katetta kuin liikevaihtoa.</span>
+          </label>
+          <label>Muu rahallinen hyöty €
+            <input id="bcOtherBenefit" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+          <label>Työajan vapautuminen (FTE)
+            <input id="bcFteSaved" type="number" min="0" step="0.1" onchange="bcFieldChanged()">
+          </label>
+          <label>Yhden FTE:n vuosikustannus €
+            <input id="bcFteCost" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+        </div>
+      </div>
+
+      <div class="bc-section">
+        <h4>4. Riskin pienentäminen / vältetty odotusarvo</h4>
+        <div class="bc-riskline">
+          <label>Riskin todennäköisyys ennen %
+            <input id="bcProbBefore" type="number" min="0" max="100" step="0.1" onchange="bcFieldChanged()">
+          </label>
+          <div class="bc-arrow">→</div>
+          <label>Riskin todennäköisyys jälkeen %
+            <input id="bcProbAfter" type="number" min="0" max="100" step="0.1" onchange="bcFieldChanged()">
+          </label>
+        </div>
+        <div class="bc-grid" style="margin-top:9px">
+          <label>Taloudellinen vaikutus riskin toteutuessa €
+            <input id="bcRiskImpact" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+          <label>Muu vuosittain vältettävä vahinko / kustannus €
+            <input id="bcAvoidedLossManual" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+          </label>
+        </div>
+        <div class="bc-help">Riskin odotusarvon pieneneminen = (todennäköisyys ennen − jälkeen) × taloudellinen vaikutus.</div>
+      </div>
+
+      <div class="bc-section" id="mandatorySection">
+        <h4>5. Pakollisuus: sääntely ja jatkuvuus</h4>
+        <div class="bc-grid">
+          <label>Velvoittavuus
+            <select id="bcMandatoryLevel" onchange="bcFieldChanged()">
+              <option value="0">Ei pakollinen</option>
+              <option value="1">Suositus / hyvä käytäntö</option>
+              <option value="2">Sisäinen vaatimus</option>
+              <option value="3">Sopimus- tai asiakasvaatimus</option>
+              <option value="4">Sääntely / valvontavaatimus</option>
+              <option value="5">Kriittinen lakisääteinen / jatkuvuusvaatimus</option>
+            </select>
+          </label>
+          <label>Määräpäivä / tavoitepäivä
+            <input id="bcDeadline" type="date" onchange="bcFieldChanged()">
+          </label>
+          <label>Seurauksen vakavuus ilman toteutusta 1–5
+            <input id="bcConsequence" type="number" min="1" max="5" step="1" onchange="bcFieldChanged()">
+          </label>
+          <label>Jatkuvuuskriittisyys 1–5
+            <input id="bcContinuity" type="number" min="1" max="5" step="1" onchange="bcFieldChanged()">
+          </label>
+          <label>Minimitoteutuksen kustannus €
+            <input id="bcMinimumCost" type="number" min="0" step="1000" onchange="bcFieldChanged()">
+            <span class="bc-help">Halvin hyväksyttävä tapa täyttää vaatimus.</span>
+          </label>
+          <label>Arvioitu jäljelle jäävä riski 1–5
+            <input id="bcResidualRisk" type="number" min="1" max="5" step="1" onchange="bcFieldChanged()">
+          </label>
+          <label class="full">Pakollisuusperustelu
+            <textarea id="bcMandatoryRationale" onchange="bcFieldChanged()" placeholder="Mikä vaatimus, valvontariski, jatkuvuus- tai muu pakottava peruste?"></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="bc-section">
+        <h4>6. Muistiinpanot ja oletukset</h4>
+        <label>Oletukset / perustelut
+          <textarea id="bcNotes" onchange="bcFieldChanged()" placeholder="Keskeiset oletukset, laskennan lähteet, epävarmuudet ja riippuvuudet."></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div>
+      <div class="bc-section">
+        <h4>Business case -yhteenveto</h4>
+        <div id="bcDecisionCallout" class="bc-callout"></div>
+        <div id="bcSummary" class="bc-summary"></div>
+      </div>
+
+      <div class="bc-section">
+        <h4>Riskiperuste</h4>
+        <div id="bcRiskSummary"></div>
+      </div>
+
+      <div class="bc-section">
+        <h4>Kassavirta ja nykyarvo</h4>
+        <div id="bcCashflow"></div>
+      </div>
+
+      <div class="bc-section">
+        <h4>Tulkinta</h4>
+        <div id="bcInterpretation" class="small"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap" class="view">
+  <div class="toolbar">
+    <button class="primary" onclick="autoSchedule()">Aikatauluta valitut automaattisesti</button>
+    <button onclick="clearSchedule()">Tyhjennä aikataulu</button>
+    <span class="note">Automaattiaikataulutus käy valitut toimenpiteet prioriteettijärjestyksessä ja etsii ensimmäisen kuukauden, johon roolien kapasiteetti riittää koko keston ajaksi.</span>
+  </div>
+  <div id="scheduleMessage"></div>
+  <div class="road"><div class="roadgrid" id="roadgrid"></div></div>
+</section>
+
+<section id="resources" class="view">
+  <div class="panel">
+    <h3>Käytettävissä oleva kapasiteetti</h3>
+    <p class="section-note">FTE-kapasiteetti annetaan rooleittain ja kuukausittain. Aikataulutus käyttää näitä rajoja.</p>
+    <div class="tablewrap"><table class="capacity-table"><thead><tr id="capacityHead"></tr></thead><tbody id="capacityRows"></tbody></table></div>
+  </div>
+</section>
+
+<section id="utilization" class="view">
+  <div class="panel">
+    <h3>Resurssien käyttöaste kuukausittain</h3>
+    <p class="section-note">Mukana ovat valitut ja aikataulutetut toimenpiteet. Katkoviiva = 100 % kapasiteetti.</p>
+    <div id="utilChart" class="chartbox"></div><div id="utilLegend" class="legend"></div><div id="utilSummary" class="summarygrid"></div>
+  </div>
+</section>
+
+<section id="impact" class="view">
+  <div class="panel">
+    <h3>Tavoitteiden vaikuttavuuden realisoituminen</h3>
+    <p class="section-note">Valitun toimenpiteen vaikutuspisteet realisoituvat sen valmistumiskuukaudessa. Graafi näyttää kunkin OKR-tavoitteen valitun toteutussalkun kumulatiivisen vaikutuksen.</p>
+    <div id="impactChart" class="chartbox"></div><div id="impactLegend" class="legend"></div><div id="impactSummary" class="summarygrid"></div>
+  </div>
+</section>
+
+<section id="settings" class="view">
+  <div class="panel" style="margin-bottom:14px">
+    <h3>Varmuuskopiointi ja palautus</h3>
+    <p class="section-note">Vie tai palauta koko OKR → Portfolio -suunnitelma. Paketti sisältää OKR-tavoitteet ja Key Resultsit, toimenpiteet, valinnat ja aikataulut, resurssikapasiteetit, priorisointipainotukset sekä Business case -tiedot.</p>
+    <div class="toolbar" style="margin-bottom:0">
+      <button class="primary" onclick="exportBackup()">Vie koko suunnitelma</button>
+      <label class="filebtn">Tuo koko suunnitelma<input id="backupImporter" type="file" accept=".json" hidden></label>
+    </div>
+    <div class="small">Palautus korvaa selaimessa olevan nykyisen suunnitelman varmuuskopion tiedoilla.</div>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>OKR-tavoitteiden priorisointipainot</h3>
+      <p class="section-note">Complexity pisteytetään käänteisesti: matala kompleksisuus on priorisoinnissa parempi.</p>
+      <div id="objectiveWeights" class="weightgrid"></div>
+      <div class="toolbar" style="margin-top:10px"><button onclick="resetObjectiveWeights()">Palauta oletukset</button></div>
+    </div>
+    <div class="panel">
+      <h3>Toimenpiteiden priorisointipainot</h3>
+      <p class="section-note">OKR-tavoitteen prioriteetti tulee automaattisesti emon pisteistä. Budjetti ja kesto pisteytetään suhteellisesti: pienempi saa enemmän pisteitä.</p>
+      <div id="actionWeights" class="weightgrid"></div>
+      <div class="toolbar" style="margin-top:10px"><button onclick="resetActionWeights()">Palauta oletukset</button></div>
+    </div>
+  </div>
+</section>
+
+<section id="instructions" class="view">
+  <div class="help-wrap">
+    <div class="help-intro">
+      <h2>OKR → Portfolio – käyttöohje</h2>
+      <p>Työkalun käyttö etenee strategiasta tavoitteisiin, tavoitteista toimenpiteisiin ja edelleen toteutuksen suunnitteluun, seurantaan ja johdon raportointiin.</p>
+    </div>
+
+    <div class="help-step">
+      <div class="help-num">1</div>
+      <div>
+        <h3>Määritä OKR-tavoitteet</h3>
+        <p>Avaa <b>OKR-tavoitteet</b>-välilehti ja lisää yhtiön strategiaa tukevat Objectives-tavoitteet. Kirjaa tavoitteen nimi, kuvaus, omistaja, strateginen teema ja aikajänne sekä siihen liittyvät <b>Key Results</b> lähtö- ja tavoitetasoineen. Arvioi jokainen tavoite kriteereillä <b>Strategic Alignment, Customer Value, Employee Value, Business Value, Complexity</b> ja <b>Risk / Opportunity</b>. Tarkista sen jälkeen <b>Tavoitteiden priorisointi</b> -välilehdeltä tavoitteiden pisteet ja keskinäinen järjestys. <b>Tavoitepuu2</b> näyttää strategisen kokonaisuuden muodossa Yhtiön strategia → tavoitteet → toimenpiteet.</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="help-num">2</div>
+      <div>
+        <h3>Muodosta tavoitteiden alle toimenpiteet</h3>
+        <p>Lisää <b>Toimenpiteet</b>-välilehdellä konkreettiset kehitystoimet ja kytke jokainen oikeaan OKR-tavoitteeseen. Anna toimenpiteelle budjetti, kesto, vaikuttavuus, toteutettavuus, kiireellisyys, omistaja, riippuvuudet sekä tarvittavat resurssit rooleittain. <b>Toimenpiteiden priorisointi</b> yhdistää toimenpiteen oman arvion sen OKR-tavoitteen prioriteettiin ja muodostaa kokonaispisteen. Valitse tämän perusteella ne toimenpiteet, jotka otetaan toteutussalkkuun. Tarvittaessa tee valituille toimenpiteille <b>Business case</b>, jossa arvioidaan kustannukset, säästöt, lisäkate, FTE-hyödyt, riskin pienentyminen, NPV, ROI ja takaisinmaksuaika. Sääntely- ja jatkuvuustoimenpiteissä täydennä lisäksi velvoittavuus, määräaika, minimitoteutuksen kustannus ja jäännösriski.</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="help-num">3</div>
+      <div>
+        <h3>Suunnittele toteutus Roadmapille</h3>
+        <p>Syötä ensin <b>Resurssit</b>-välilehdelle käytettävissä oleva FTE-kapasiteetti rooleittain ja kuukausittain. Avaa sitten <b>Roadmap</b> ja sijoita valitut toimenpiteet toteutuskuukausille joko käsin tai automaattisella aikataulutuksella. Automaattiaikataulutus etenee toimenpiteiden prioriteettijärjestyksessä ja etsii ensimmäisen ajankohdan, jolloin tarvittava kapasiteetti riittää koko toteutuksen ajan. Tarkista samalla riippuvuudet, valmistumisajankohdat ja mahdolliset aikatauluttamatta jääneet toimenpiteet.</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="help-num">4</div>
+      <div>
+        <h3>Seuraa toteutuskykyä ja vaikuttavuutta</h3>
+        <p><b>Käyttöaste</b>-välilehti näyttää resurssien kuukausittaisen kuormituksen ja nostaa esiin 100 % kapasiteetin ylitykset. <b>Vaikuttavuus</b> näyttää, milloin eri tavoitteisiin liittyvien toimenpiteiden suunniteltu vaikutus alkaa realisoitua ja kuinka se kertyy vuoden aikana. Päivitä suunnitelmaa, kun aikataulut, resurssit, kustannukset tai business case -oletukset muuttuvat.</p>
+      </div>
+    </div>
+
+    <div class="help-step">
+      <div class="help-num">5</div>
+      <div>
+        <h3>Raportoi johdolle</h3>
+        <p><b>Kokonaisuus</b>-välilehden <b>Johdon yhteenveto</b> muodostaa automaattisesti sanallisen tilannekuvan strategisesta kohdistumisesta, salkun koosta, budjetista, kapasiteettipaineista, aikataulutuksesta, business caseista, pakollisista toimenpiteistä ja vaikuttavuuden ajoituksesta. <b>Vie AI-analyysiin</b> tuottaa lisäksi JSON-paketin, jonka voi antaa ulkopuoliselle LLM:lle syvempää johtoryhmäanalyysiä varten.</p>
+      </div>
+    </div>
+
+    <div class="help-flow">
+      Yhtiön strategia → OKR-tavoitteet → Key Results → tavoitteiden priorisointi → toimenpiteet → toimenpiteiden priorisointi → Business case → valittu toteutussalkku → Roadmap → resurssit ja vaikuttavuus → johdon raportointi
+    </div>
+  </div>
+</section>
+
+</main>
+
+<dialog id="objectiveDialog">
+  <h3 id="objectiveDialogTitle">OKR-tavoite</h3>
+  <form id="objectiveForm" class="formgrid">
+    <input type="hidden" name="id">
+    <label>Objective / tavoitteen nimi<input name="name" required></label>
+    <label>Omistaja<input name="owner"></label>
+    <label class="full">Kuvaus<textarea name="description" placeholder="Mitä halutaan saada aikaan ja miksi?"></textarea></label>
+    <label>Strateginen teema<input name="theme" placeholder="Esim. Asiakaskokemus"></label>
+    <label>Aikajänne<select name="horizon"><option>2026</option><option>2027</option><option>2026–2027</option></select></label>
+    <div class="full"><h4 style="margin:7px 0">Priorisointikriteerit 1–5</h4></div>
+    <div class="criteria full">
+      <div class="criterion"><label>Strategic Alignment<input name="strategic" type="number" min="1" max="5" required></label></div>
+      <div class="criterion"><label>Customer Value<input name="customer" type="number" min="1" max="5" required></label></div>
+      <div class="criterion"><label>Employee Value<input name="employee" type="number" min="1" max="5" required></label></div>
+      <div class="criterion"><label>Business Value<input name="business" type="number" min="1" max="5" required></label></div>
+      <div class="criterion"><label>Complexity<input name="complexity" type="number" min="1" max="5" required></label></div>
+      <div class="criterion"><label>Risk / Opportunity<input name="risk" type="number" min="1" max="5" required></label></div>
+    </div>
+    <div class="full">
+      <div class="toolbar" style="margin:8px 0 4px"><h4 style="margin:0;margin-right:auto">Key Results</h4><button type="button" onclick="addKRRow()">+ Lisää KR</button></div>
+      <div id="krEditor"></div>
+      <div class="small">Nimi sekä halutessasi lähtötaso, tavoitetaso ja yksikkö.</div>
+    </div>
+    <div class="full right"><button type="button" onclick="objectiveDialog.close()">Peruuta</button> <button class="primary">Tallenna</button></div>
+  </form>
+</dialog>
+
+<dialog id="actionDialog">
+  <h3 id="actionDialogTitle">Toimenpide</h3>
+  <form id="actionForm" class="formgrid">
+    <input type="hidden" name="id">
+    <label>Nimi<input name="name" required></label>
+    <label>OKR-tavoite<select name="objective"></select></label>
+    <label>Budjetti €<input name="budget" type="number" min="0" required></label>
+    <label>Kesto kk<input name="duration" type="number" min="1" max="12" required></label>
+    <label>Vaikuttavuus 1–5<input name="impact" type="number" min="1" max="5" required></label>
+    <label>Toteutettavuus 1–5<input name="feasibility" type="number" min="1" max="5" required></label>
+    <label>Kiireellisyys 1–5<input name="urgency" type="number" min="1" max="5" required></label>
+    <label>Aloitus<select name="start"></select></label>
+    <label>Omistaja<input name="owner"></label>
+    <label>Riippuvuudet / huomio<input name="dependencies"></label>
+    <label class="switch full"><input name="selected" type="checkbox"> Valittu toteutussalkkuun</label>
+    <div class="rolebox">
+      <h4>Roolien resurssivaraukset / aktiivinen kuukausi (FTE)</h4>
+      <div class="roleinputs" id="roleInputs"></div>
+    </div>
+    <div class="full right"><button type="button" onclick="actionDialog.close()">Peruuta</button> <button class="primary">Tallenna</button></div>
+  </form>
+</dialog>
+
+<script>
+const months=['Tam','Hel','Maa','Huh','Tou','Kes','Hei','Elo','Syy','Lok','Mar','Jou'];
+const roles=[
+ {key:'dev',label:'Devaus'},
+ {key:'arch',label:'Arkkitehdit'},
+ {key:'pm',label:'Projektipäälliköt'},
+ {key:'sec',label:'Tietoturva'},
+ {key:'test',label:'Testaus'}
+];
+const objectiveCriteria={
+ strategic:'Strategic Alignment',customer:'Customer Value',employee:'Employee Value',
+ business:'Business Value',complexity:'Complexity',risk:'Risk / Opportunity'
+};
+const actionCriteria={
+ objective:'OKR-tavoitteen prioriteetti',impact:'Vaikuttavuus',feasibility:'Toteutettavuus',
+ urgency:'Kiireellisyys',budget:'Budjettitehokkuus',duration:'Nopeus / kesto'
+};
+const defaultObjectiveWeights={strategic:25,customer:20,employee:15,business:20,complexity:10,risk:10};
+const defaultActionWeights={objective:30,impact:25,feasibility:15,urgency:10,budget:10,duration:10};
+
+const demoObjectives=[
+ {id:'o1',name:'Asiakkaan digitaalinen asiointi on markkinan sujuvinta',description:'Vähennetään kitkaa keskeisissä palvelupoluissa ja kasvatetaan digitaalisen itsepalvelun osuutta.',theme:'Asiakaskokemus',owner:'Asiakkuudet',horizon:'2026',strategic:5,customer:5,employee:3,business:4,complexity:4,risk:3,krs:[
+  {name:'Digitaalisen asioinnin osuus',baseline:65,target:80,unit:'%'},{name:'NPS',baseline:42,target:50,unit:'p'}
+ ]},
+ {id:'o2',name:'Operatiivinen työ automatisoituu merkittävästi',description:'AI ja automaatio poistavat manuaalisia vaiheita suurivolyymisistä prosesseista.',theme:'Tehokkuus',owner:'Operatiivinen kehitys',horizon:'2026',strategic:5,customer:3,employee:5,business:5,complexity:3,risk:4,krs:[
+  {name:'Automaattisesti käsiteltyjen tapausten osuus',baseline:18,target:45,unit:'%'},{name:'Käsittelyaika',baseline:100,target:75,unit:'indeksi'}
+ ]},
+ {id:'o3',name:'Kannattava kasvu vahvistuu datan avulla',description:'Hinnoittelu ja myynti hyödyntävät nykyistä paremmin asiakas- ja riskidataa.',theme:'Kasvu',owner:'Yritysliiketoiminta',horizon:'2026',strategic:4,customer:4,employee:3,business:5,complexity:4,risk:4,krs:[
+  {name:'Uuden myynnin kate',baseline:100,target:108,unit:'indeksi'},{name:'Ristiinmyyntiaste',baseline:12,target:18,unit:'%'}
+ ]},
+ {id:'o4',name:'Sääntely- ja jatkuvuusvalmius on ennakoiva',description:'Keskeiset sääntely- ja ICT-riskit hallitaan ennen määräaikoja.',theme:'Riski ja sääntely',owner:'Riskienhallinta',horizon:'2026',strategic:5,customer:2,employee:3,business:4,complexity:4,risk:5,krs:[
+  {name:'Kriittisten kontrollien kattavuus',baseline:72,target:95,unit:'%'},{name:'Avoimet korkean riskin havainnot',baseline:14,target:3,unit:'kpl'}
+ ]}
+];
+
+const demoActions=[
+ {id:'a1',name:'OmaFennia palvelupolku',objective:'o1',budget:520000,impact:5,feasibility:4,urgency:4,duration:6,start:5,owner:'Digipalvelut',dependencies:'',selected:true,resources:{dev:3,arch:.3,pm:.7,sec:.3,test:1.4}},
+ {id:'a2',name:'Digitaalinen vahinkoilmoitus 2.0',objective:'o1',budget:260000,impact:5,feasibility:4,urgency:5,duration:4,start:1,owner:'Korvauspalvelut',dependencies:'',selected:true,resources:{dev:2,arch:.2,pm:.5,sec:.2,test:.9}},
+ {id:'a3',name:'Asiakasviestinnän personointi',objective:'o1',budget:190000,impact:4,feasibility:4,urgency:3,duration:3,start:9,owner:'Asiakkuudet',dependencies:'OmaFennia palvelupolku',selected:false,resources:{dev:1.4,arch:.2,pm:.3,sec:.1,test:.5}},
+ {id:'a4',name:'AI-avusteinen korvauskäsittely',objective:'o2',budget:450000,impact:5,feasibility:3,urgency:4,duration:6,start:2,owner:'Korvauspalvelut',dependencies:'Data-alusta',selected:true,resources:{dev:3,arch:.4,pm:.8,sec:.3,test:1.2}},
+ {id:'a5',name:'Automaattinen dokumenttiluokittelu',objective:'o2',budget:230000,impact:4,feasibility:4,urgency:4,duration:4,start:1,owner:'Vakuutustuotanto',dependencies:'',selected:true,resources:{dev:1.8,arch:.2,pm:.4,sec:.2,test:.7}},
+ {id:'a6',name:'Prosessien työjonojen automatisointi',objective:'o2',budget:310000,impact:5,feasibility:3,urgency:3,duration:5,start:7,owner:'Operatiivinen kehitys',dependencies:'Dokumenttiluokittelu',selected:false,resources:{dev:2.4,arch:.3,pm:.6,sec:.2,test:.9}},
+ {id:'a7',name:'Hinnoittelumoottorin uudistus',objective:'o3',budget:380000,impact:5,feasibility:4,urgency:4,duration:5,start:1,owner:'Underwriting',dependencies:'',selected:true,resources:{dev:2.5,arch:.5,pm:.5,sec:.2,test:1}},
+ {id:'a8',name:'Dynaamisen hinnoittelun pilotointi',objective:'o3',budget:280000,impact:5,feasibility:3,urgency:3,duration:4,start:6,owner:'Hinnoittelu',dependencies:'Hinnoittelumoottori',selected:false,resources:{dev:1.8,arch:.3,pm:.4,sec:.1,test:.8}},
+ {id:'a9',name:'DORA-kontrollien automatisointi',objective:'o4',budget:340000,impact:4,feasibility:4,urgency:5,duration:5,start:1,owner:'Riskienhallinta',dependencies:'',selected:true,resources:{dev:1.5,arch:.4,pm:.5,sec:1.2,test:.6}},
+ {id:'a10',name:'FiDA-valmiudet',objective:'o4',budget:620000,impact:4,feasibility:3,urgency:4,duration:7,start:4,owner:'Data',dependencies:'',selected:false,resources:{dev:3.5,arch:.8,pm:1,sec:.8,test:1.4}}
+];
+
+const demoCapacities={
+ dev:[10,10,10,10,10,10,8,9,10,10,10,10],
+ arch:[2.2,2.2,2.2,2.2,2.2,2.2,1.6,1.8,2.2,2.2,2.2,2.2],
+ pm:[2.8,2.8,2.8,2.8,2.8,2.8,2.2,2.4,2.8,2.8,2.8,2.8],
+ sec:[2.3,2.3,2.3,2.3,2.3,2.3,1.8,2,2.3,2.3,2.3,2.3],
+ test:[4,4,4,4,4,4,3,3.5,4,4,4,4]
+};
+
+const STORAGE='okr_portfolio_integrated_v1';
+let stored=JSON.parse(localStorage.getItem(STORAGE)||'null');
+let objectives=stored?.objectives||structuredClone(demoObjectives);
+let actions=stored?.actions||structuredClone(demoActions);
+let capacities=stored?.capacities||structuredClone(demoCapacities);
+let objectiveWeights=stored?.objectiveWeights||structuredClone(defaultObjectiveWeights);
+let actionWeights=stored?.actionWeights||structuredClone(defaultActionWeights);
+let businessCases=stored?.businessCases||{};
+
+const euro=n=>new Intl.NumberFormat('fi-FI',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n)||0);
+const num=v=>Number.isFinite(+v)?+v:0;
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function save(){localStorage.setItem(STORAGE,JSON.stringify({objectives,actions,capacities,objectiveWeights,actionWeights,businessCases}));render()}
+function objectiveScore(o){
+ let sum=0,max=0;
+ Object.entries(objectiveWeights).forEach(([k,w])=>{
+   let v=num(o[k]||3); if(k==='complexity')v=6-v;
+   sum+=v*num(w); max+=5*num(w);
+ });
+ return max?100*sum/max:0;
+}
+function priority(score){return score>=80?['P1','p1']:score>=65?['P2','p2']:score>=50?['P3','p3']:['P4','p4']}
+function objectiveValue(o){return (num(o.strategic)+num(o.customer)+num(o.employee)+num(o.business)+num(o.risk))/5}
+function actionScore(a){
+ const maxB=Math.max(1,...actions.map(x=>num(x.budget)));
+ const maxD=Math.max(1,...actions.map(x=>num(x.duration)));
+ const os=objectives.find(o=>o.id===a.objective);
+ const values={
+   objective:(os?objectiveScore(os):0)/100,
+   impact:num(a.impact)/5,
+   feasibility:num(a.feasibility)/5,
+   urgency:num(a.urgency)/5,
+   budget:1-num(a.budget)/maxB,
+   duration:1-num(a.duration)/maxD
+ };
+ let sum=0,w=0;Object.entries(actionWeights).forEach(([k,wt])=>{sum+=Math.max(0,values[k]||0)*num(wt);w+=num(wt)});
+ return w?100*sum/w:0;
+}
+function totalFte(a){return roles.reduce((s,r)=>s+num(a.resources?.[r.key]),0)}
+function isActive(a,m){return a.selected&&num(a.start)>0&&m>=num(a.start)&&m<num(a.start)+num(a.duration)}
+function finishMonth(a){return num(a.start)>0?num(a.start)+num(a.duration)-1:0}
+function roleMonth(key,m){return actions.filter(a=>isActive(a,m)).reduce((s,a)=>s+num(a.resources?.[key]),0)}
+function capacity(key,m){return num(capacities[key]?.[m-1])}
+function utilization(key,m){let c=capacity(key,m),u=roleMonth(key,m);return c>0?100*u/c:(u>0?999:0)}
+function selectedActions(){return actions.filter(a=>a.selected)}
+function plannedImpact(oid){return selectedActions().filter(a=>a.objective===oid).reduce((s,a)=>s+num(a.impact),0)}
+function realizedImpact(oid,m){return selectedActions().filter(a=>a.objective===oid&&finishMonth(a)>0&&finishMonth(a)<=m).reduce((s,a)=>s+num(a.impact),0)}
+function overloadCount(){let n=0;roles.forEach(r=>months.forEach((_,i)=>{if(utilization(r.key,i+1)>100)n++}));return n}
+
+function render(){
+ renderDashboard();renderExecutiveSummary();renderObjectives();renderTree();renderTree2();renderObjectivePriority();renderActions();renderActionPriority();
+ renderBusinessCase();renderRoadmap();renderResources();renderUtilization();renderImpact();renderSettings();
+}
+function renderDashboard(){
+ const selected=selectedActions(),budget=selected.reduce((s,a)=>s+num(a.budget),0);
+ const scheduled=selected.filter(a=>num(a.start)>0).length;
+ dashboardKpis.innerHTML=[
+   [objectives.length,'OKR-tavoitteita'],
+   [actions.length,'Toimenpide-ehdotuksia'],
+   [selected.length,'Valittu toteutussalkkuun'],
+   [euro(budget),'Valittu budjetti']
+ ].map(([v,l])=>`<div class="kpi"><span class="label">${l}</span><b>${v}</b></div>`).join('');
+ flow.innerHTML=[
+   [objectives.length,'Objectives'],['→',''],[objectives.reduce((s,o)=>s+(o.krs?.length||0),0),'Key Results'],['→',''],
+   [actions.length,'Toimenpide-ehdotukset'],['→',''],[selected.length,'Valitut'],['→',''],[scheduled,'Aikataulutetut'],['→',''],
+   [roles.length,'Resurssiroolia'],['→',''],[overloadCount(),'Ylikuormitus-kk']
+ ].map((x,i)=>i%2===1?`<div class="arrow">→</div>`:`<div class="step">${x[1]}<b>${x[0]}</b></div>`).join('');
+ const os=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+ dashboardObjectives.innerHTML=os.map(o=>{
+   let s=objectiveScore(o),p=priority(s);
+   return `<div style="margin:10px 0"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(o.name)}</b><span class="pill ${p[1]}">${p[0]} · ${s.toFixed(1)}</span></div><div class="bar" style="margin-top:5px"><i style="width:${s}%"></i></div></div>`;
+ }).join('')||'<span class="note">Ei tavoitteita</span>';
+ const top=[...selected].sort((a,b)=>actionScore(b)-actionScore(a)).slice(0,6);
+ dashboardPortfolio.innerHTML=top.map((a,i)=>`<div style="padding:7px 0;border-bottom:1px solid #edf0f4"><span class="rank">#${i+1}</span> <b>${esc(a.name)}</b><span style="float:right" class="score">${actionScore(a).toFixed(1)}</span><div class="small">${esc(objectives.find(o=>o.id===a.objective)?.name||'')} · ${a.start?months[a.start-1]:'ei aikataulutettu'} · ${euro(a.budget)}</div></div>`).join('')||'<span class="note">Ei valittuja toimenpiteitä</span>';
+}
+
+function pct(part,total){return total?100*part/total:0}
+function monthNameFromNum(m){return m>=1&&m<=12?months[m-1]:'–'}
+function formatMEur(v){return (num(v)/1000000).toLocaleString('fi-FI',{minimumFractionDigits:1,maximumFractionDigits:1})+' M€'}
+function weightedObjectiveCoverage(){
+  if(!objectives.length)return 0;
+  const total=objectives.reduce((s,o)=>s+objectiveScore(o),0)||1;
+  const covered=objectives.reduce((s,o)=>s+(actions.some(a=>a.objective===o.id&&a.selected)?objectiveScore(o):0),0);
+  return 100*covered/total;
+}
+function renderExecutiveSummary(){
+  if(!document.getElementById('executiveSummary'))return;
+  const selected=selectedActions();
+  const selectedBudget=selected.reduce((s,a)=>s+num(a.budget),0);
+  const totalBudget=actions.reduce((s,a)=>s+num(a.budget),0);
+  const scheduled=selected.filter(a=>num(a.start)>0);
+  const unscheduled=selected.filter(a=>!num(a.start));
+  const sortedObjectives=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+  const topObjective=sortedObjectives[0];
+  const sortedSelected=[...selected].sort((a,b)=>actionScore(b)-actionScore(a));
+  const topAction=sortedSelected[0];
+
+  const mandatorySelected=selected.filter(a=>{const bc=businessCases[a.id];return bc&&(num(bc.mandatoryLevel)>=4||bc.type==='regulation'||bc.type==='continuity')});
+  const bcSelected=selected.filter(a=>businessCases[a.id]);
+  const positiveNpv=bcSelected.filter(a=>calcBusinessCase(businessCases[a.id]).npv>=0);
+  const negativeNpv=bcSelected.filter(a=>calcBusinessCase(businessCases[a.id]).npv<0);
+
+  const overloads=[];
+  roles.forEach(r=>months.forEach((m,i)=>{const u=utilization(r.key,i+1);if(u>100)overloads.push({role:r.label,month:m,pct:u,used:roleMonth(r.key,i+1),cap:capacity(r.key,i+1)})}));
+  overloads.sort((a,b)=>b.pct-a.pct);
+  const utilizationPeaks=roles.map(r=>{const vals=months.map((_,i)=>utilization(r.key,i+1));const peak=Math.max(...vals),idx=vals.indexOf(peak);return{role:r.label,pct:peak,month:months[idx]}}).sort((a,b)=>b.pct-a.pct);
+
+  const objectiveSpend=objectives.map(o=>{const aa=selected.filter(a=>a.objective===o.id);return{o,budget:aa.reduce((s,a)=>s+num(a.budget),0),count:aa.length,impact:aa.reduce((s,a)=>s+num(a.impact),0)}}).sort((a,b)=>b.budget-a.budget);
+  const impactCompletion=objectives.map(o=>{const p=plannedImpact(o.id);const fs=selected.filter(a=>a.objective===o.id&&finishMonth(a)>0).map(finishMonth);return{o,planned:p,first:fs.length?Math.min(...fs):0,last:fs.length?Math.max(...fs):0}});
+  const coverage=weightedObjectiveCoverage(),selectionRate=pct(selected.length,actions.length),scheduleRate=pct(scheduled.length,selected.length);
+  const paragraphs=[];
+
+  if(!objectives.length) paragraphs.push('Salkussa ei ole vielä OKR-tavoitteita. Johdon yhteenveto täydentyy, kun tavoitteet ja niihin liittyvät toimenpiteet lisätään.');
+  else if(!actions.length) paragraphs.push(`Kokonaisuudessa on <b>${objectives.length} OKR-tavoitetta</b>, mutta niihin ei ole vielä liitetty toimenpiteitä. Strateginen priorisointi on siis olemassa, mutta toteutussalkku ei ole vielä muodostunut.`);
+  else paragraphs.push(`Kokonaisuudessa on <b>${objectives.length} OKR-tavoitetta</b> ja <b>${actions.length} toimenpide-ehdotusta</b>. Toteutussalkkuun on valittu <b>${selected.length} toimenpidettä (${selectionRate.toFixed(0)} %)</b>, joiden yhteenlaskettu budjetti on <b>${formatMEur(selectedBudget)}</b>${totalBudget>0?` eli ${pct(selectedBudget,totalBudget).toFixed(0)} % kaikkien ehdotusten budjetista`:''}.`);
+
+  if(topObjective){
+    const topSpend=objectiveSpend[0];
+    let text=`Strategisessa priorisoinnissa korkein tavoite on <b>${esc(topObjective.name)}</b> pisteillä <b>${objectiveScore(topObjective).toFixed(1)}</b>.`;
+    if(topSpend&&topSpend.budget>0){text+=` Suurin osa valitusta budjetista kohdistuu tavoitteeseen <b>${esc(topSpend.o.name)}</b> (${formatMEur(topSpend.budget)}, ${topSpend.count} toimenpidettä).`;if(topSpend.o.id!==topObjective.id)text+=` Budjetin suurin painotus ei siis kohdistu suoraan korkeimman prioriteetin tavoitteeseen, mikä on hyvä tarkistaa tietoisena portfoliovalintana.`}
+    if(coverage<100){const uncovered=objectives.filter(o=>!selected.some(a=>a.objective===o.id));if(uncovered.length)text+=` Valittu salkku kattaa painotetusti noin <b>${coverage.toFixed(0)} %</b> tavoitteiden prioriteettiarvosta; ilman valittua toimenpidettä jää ${uncovered.length} tavoite${uncovered.length===1?'':'tta'}: <b>${uncovered.map(o=>esc(o.name)).join(', ')}</b>.`}
+    paragraphs.push(text);
+  }
+
+  if(selected.length){
+    let text=`Valituista toimenpiteistä <b>${scheduled.length}/${selected.length}</b> on aikataulutettu.`;
+    if(unscheduled.length)text+=` <b>${unscheduled.length}</b> valittua toimenpidettä odottaa vielä aikataulutusta${unscheduled.length<=3?`: ${unscheduled.map(a=>esc(a.name)).join(', ')}`:'.'}`;
+    if(overloads.length){const worst=overloads[0];text+=` Nykyinen suunnitelma ylittää resurssikapasiteetin <b>${overloads.length}</b> rooli–kuukausiyhdistelmässä. Suurin kuormitus on <b>${esc(worst.role)}</b>-roolissa ${worst.month}-kuussa (${worst.pct>=999?'kapasiteettia ei ole asetettu':worst.pct.toFixed(0)+' %'}).`}
+    else if(scheduled.length){const peak=utilizationPeaks[0];text+=` Aikataulutettu salkku pysyy nykyisillä kapasiteeteilla rajoissa. Korkein käyttöaste on <b>${esc(peak.role)}</b>-roolissa ${peak.month}-kuussa (${peak.pct.toFixed(0)} %).`}
+    paragraphs.push(text);
+  }
+
+  if(bcSelected.length){
+    let text=`Business case on määritelty <b>${bcSelected.length}/${selected.length}</b> valitulle toimenpiteelle. Niistä ${positiveNpv.length} on nykyisillä oletuksilla positiivisen NPV:n ja ${negativeNpv.length} negatiivisen NPV:n puolella.`;
+    if(mandatorySelected.length)text+=` <b>${mandatorySelected.length}</b> valittua toimenpidettä on luokiteltu sääntely-, jatkuvuus- tai muuten pakolliseksi. Näissä tapauksissa ROI:ta ei pidä käyttää yksin päätöskriteerinä, vaan olennaisia ovat vaatimuksen täyttyminen, määräaika, minimitoteutuksen kustannus ja hyväksyttävä jäännösriski.`;
+    paragraphs.push(text);
+  } else if(selected.length) paragraphs.push('Valituille toimenpiteille ei ole vielä tallennettu business case -laskelmia. Salkun taloudellista kokonaiskuvaa ei siksi vielä voida arvioida NPV:n, takaisinmaksuajan tai riskin odotusarvon perusteella.');
+
+  const timed=impactCompletion.filter(x=>x.planned>0&&x.last>0);
+  if(timed.length){const latest=[...timed].sort((a,b)=>b.last-a.last)[0],earliest=[...timed].sort((a,b)=>a.first-b.first)[0];let text=`Vaikuttavuus alkaa realisoitua aikaisimmin tavoitteessa <b>${esc(earliest.o.name)}</b> (${monthNameFromNum(earliest.first)}).`;if(latest.last>=10)text+=` Tavoitteen <b>${esc(latest.o.name)}</b> suunniteltu vaikutus valmistuu vasta loppuvuonna (${monthNameFromNum(latest.last)}), mikä kasvattaa vuoden sisäistä toteutus- ja hyötyjen realisoitumisriskiä.`;else text+=` Valittujen ja aikataulutettujen toimenpiteiden vaikutukset valmistuvat nykyisen suunnitelman mukaan viimeistään ${monthNameFromNum(latest.last)}-kuussa.`;paragraphs.push(text)}
+
+  const signals=[];
+  if(overloads.length)signals.push('resurssikapasiteetin tasapainotus');
+  if(unscheduled.length)signals.push('valittujen toimenpiteiden aikataulutus');
+  if(coverage<90)signals.push('strategisen kattavuuden tarkistus');
+  if(selected.length&&bcSelected.length<selected.length)signals.push('puuttuvien business casejen täydentäminen');
+  if(negativeNpv.length)signals.push('negatiivisten business casejen perustelut');
+  if(mandatorySelected.length)signals.push('pakollisten toimenpiteiden minimitoteutuksen ja jäännösriskin arviointi');
+  if(signals.length)paragraphs.push(`Johdon näkökulmasta seuraavat päätöskohdat korostuvat tällä hetkellä: <b>${signals.join(', ')}</b>.`);
+  else if(objectives.length&&actions.length)paragraphs.push('Kokonaisuus on nykyisten tietojen perusteella varsin tasapainoinen: tavoitteet on kytketty toimenpiteisiin, valittu salkku on aikataulutettu ja kapasiteetti pysyy hallinnassa. Seuraava huomio kannattaa kohdistaa hyötyjen toteutumisen seurantaan ja business case -oletusten päivittämiseen.');
+
+  executiveSummary.innerHTML=paragraphs.map(p=>`<p>${p}</p>`).join('');
+  const cards=[['Strateginen kattavuus',coverage.toFixed(0)+' %'],['Aikataulutettu valituista',selected.length?scheduleRate.toFixed(0)+' %':'–'],['Kapasiteetin ylityksiä',String(overloads.length)],['Pakollisia valituissa',String(mandatorySelected.length)],['Business case tehty',selected.length?`${bcSelected.length}/${selected.length}`:'–'],['Valittu budjetti',formatMEur(selectedBudget)]];
+  executiveInsights.innerHTML=cards.map(([l,v])=>`<div class="exec-insight"><div class="label">${l}</div><div class="value">${v}</div></div>`).join('');
+
+  const items=[];
+  if(topAction)items.push(`Korkeimman prioriteetin valittu toimenpide on <b>${esc(topAction.name)}</b> (${actionScore(topAction).toFixed(1)} p).`);
+  if(overloads.length){const w=overloads[0];items.push(`Ratkaise suurin kapasiteettipaine: <b>${esc(w.role)}, ${w.month}, ${w.pct>=999?'ei kapasiteettia':w.pct.toFixed(0)+' %'}</b>.`)}
+  if(unscheduled.length)items.push(`Aikatauluta tai poista toteutussalkusta <b>${unscheduled.length}</b> tällä hetkellä aikatauluttamatonta valittua toimenpidettä.`);
+  if(selected.length&&bcSelected.length<selected.length)items.push(`Täydennä business case vielä <b>${selected.length-bcSelected.length}</b> valitulle toimenpiteelle.`);
+  if(mandatorySelected.length){const weak=mandatorySelected.filter(a=>{const bc=businessCases[a.id];return !bc.deadline||num(bc.minimumCost)<=0||!String(bc.mandatoryRationale||'').trim()});if(weak.length)items.push(`Täsmennä pakollisten toimenpiteiden päätösperusteet: ${weak.length} casesta puuttuu vielä määräpäivä, minimitoteutuksen kustannus tai kirjallinen velvoittavuusperustelu.`)}
+  executiveActions.innerHTML=items.length?`<b>Päätöstä / huomiota vaativat asiat</b><ul>${items.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<b>Päätöstä / huomiota vaativat asiat</b><div class="small" style="margin-top:5px">Ei tällä hetkellä selvästi poikkeavia havaintoja annetun datan perusteella.</div>`;
+}
+
+function renderObjectives(){
+ const sorted=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+ objectiveList.innerHTML=sorted.map(o=>{
+   let s=objectiveScore(o),p=priority(s),count=actions.filter(a=>a.objective===o.id).length,sel=actions.filter(a=>a.objective===o.id&&a.selected).length;
+   return `<div class="objcard">
+    <div class="objhead"><div><div class="objtitle">${esc(o.name)}</div><div class="objmeta"><span class="pill">${esc(o.theme||'Ei teemaa')}</span><span class="pill">${esc(o.owner||'Ei omistajaa')}</span><span class="pill">${esc(o.horizon||'')}</span><span class="pill ${p[1]}">${p[0]} · ${s.toFixed(1)}</span></div></div>
+    <div><button onclick="openObjective('${o.id}')">Muokkaa</button> <button class="danger" onclick="deleteObjective('${o.id}')">Poista</button></div></div>
+    <p>${esc(o.description||'')}</p>
+    <b>Key Results</b>
+    <ul class="krlist">${(o.krs||[]).map(k=>`<li>${esc(k.name)}${k.target!==''&&k.target!=null?` — ${esc(k.baseline??'–')} → <b>${esc(k.target)}</b> ${esc(k.unit||'')}`:''}</li>`).join('')||'<li class="note">Ei Key Resulteja</li>'}</ul>
+    <div class="small">${count} toimenpide-ehdotusta · ${sel} valittu toteutussalkkuun</div>
+   </div>`;
+ }).join('');
+}
+
+const treeState={};
+function renderTree(){
+  const sorted=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+  treeView.innerHTML=sorted.map(o=>{
+    const os=objectiveScore(o),op=priority(os);
+    const aa=actions.filter(a=>a.objective===o.id).sort((a,b)=>actionScore(b)-actionScore(a));
+    const open=treeState[o.id]!==false;
+    const selectedCount=aa.filter(a=>a.selected).length;
+    const children=aa.length?aa.map(a=>{
+      const s=actionScore(a),p=priority(s);
+      const schedule=a.start?`${months[a.start-1]}–${months[Math.min(11,a.start+a.duration-2)]}`:'Ei aikataulutettu';
+      return `<div class="tree-action">
+        <div>
+          <div class="tree-action-name">${esc(a.name)}</div>
+          <div class="small">${esc(a.owner||'')} · ${euro(a.budget)} · ${a.duration} kk · ${totalFte(a).toFixed(1)} FTE/kk</div>
+        </div>
+        <div class="tree-meta"><span class="pill ${p[1]}">${p[0]} · ${s.toFixed(1)}</span></div>
+        <div class="tree-meta">${a.selected?'<span class="pill p1">Valittu</span>':'<span class="pill">Ei valittu</span>'}</div>
+        <div class="tree-meta">${esc(schedule)}</div>
+      </div>`;
+    }).join(''):`<div class="tree-empty">Tavoitteeseen ei ole vielä kytketty toimenpiteitä.</div>`;
+    return `<div class="tree-objective">
+      <div class="tree-objective-head">
+        <div class="tree-objective-title">
+          <button class="tree-toggle" onclick="toggleTree('${o.id}')">${open?'−':'+'}</button>
+          <div>
+            ${esc(o.name)}
+            <div class="small">${esc(o.theme||'')} · ${esc(o.owner||'')} · ${(o.krs||[]).length} Key Resultia · ${aa.length} toimenpidettä</div>
+          </div>
+        </div>
+        <div class="tree-meta"><span class="pill ${op[1]}">${op[0]} · ${os.toFixed(1)}</span></div>
+        <div class="tree-meta">${selectedCount}/${aa.length} valittu</div>
+        <div class="tree-meta">${aa.filter(a=>a.start).length}/${aa.length} aikataulutettu</div>
+      </div>
+      <div class="tree-children" style="display:${open?'block':'none'}">${children}</div>
+    </div>`;
+  }).join('')||'<div class="panel"><span class="note">Ei OKR-tavoitteita.</span></div>';
+}
+function toggleTree(id){treeState[id]=treeState[id]===false?true:false;renderTree()}
+function expandAllTree(){objectives.forEach(o=>treeState[o.id]=true);renderTree()}
+function collapseAllTree(){objectives.forEach(o=>treeState[o.id]=false);renderTree()}
+
+
+function renderTree2(){
+  const sorted=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+  const totalActions=actions.length;
+  const selectedCount=actions.filter(a=>a.selected).length;
+
+  const branches=sorted.map(o=>{
+    const os=objectiveScore(o),op=priority(os);
+    const aa=actions.filter(a=>a.objective===o.id).sort((a,b)=>actionScore(b)-actionScore(a));
+
+    const actionHtml=aa.length ? aa.map(a=>{
+      const s=actionScore(a),p=priority(s);
+      const schedule=a.start
+        ? `${months[a.start-1]}–${months[Math.min(11,a.start+a.duration-2)]}`
+        : 'Ei aikataulutettu';
+      const cls=`strategy-action-card ${a.selected?'selected':''} ${!a.start?'unscheduled':''}`;
+      return `<div class="${cls}">
+        <div class="action-name">${esc(a.name)}</div>
+        <div class="action-meta">
+          <span class="pill ${p[1]}">${p[0]} · ${s.toFixed(1)}</span>
+          ${a.selected?'<span class="pill p1">Valittu</span>':'<span class="pill">Ei valittu</span>'}
+        </div>
+        <div class="action-meta">${esc(a.owner||'')} · ${euro(a.budget)} · ${a.duration} kk</div>
+        <div class="action-meta">${esc(schedule)} · ${totalFte(a).toFixed(1)} FTE/kk</div>
+      </div>`;
+    }).join('') : `<div class="strategy-no-actions">Ei toimenpiteitä</div>`;
+
+    return `<div class="strategy-branch">
+      <div class="strategy-objective-card">
+        <div class="objective-name">${esc(o.name)}</div>
+        <div class="objective-meta">
+          <span class="pill ${op[1]}">${op[0]} · ${os.toFixed(1)}</span>
+          <span class="pill">${esc(o.theme||'Ei teemaa')}</span>
+        </div>
+        <div class="small" style="margin-top:6px">${(o.krs||[]).length} Key Resultia · ${aa.length} toimenpidettä</div>
+      </div>
+      <div class="strategy-actions">${actionHtml}</div>
+    </div>`;
+  }).join('');
+
+  tree2View.innerHTML=`
+    <div class="strategy-root-wrap">
+      <div class="strategy-root">
+        <div class="eyebrow">Strateginen lähtökohta</div>
+        <div class="title">Yhtiön strategia</div>
+        <div class="sub">${objectives.length} OKR-tavoitetta · ${totalActions} toimenpidettä · ${selectedCount} valittu toteutukseen</div>
+      </div>
+    </div>
+    <div class="strategy-branches">${branches||'<div class="strategy-no-actions">Ei OKR-tavoitteita.</div>'}</div>`;
+}
+
+function renderObjectivePriority(){
+ const sorted=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+ objectivePriorityTable.innerHTML=`<table><thead><tr><th>#</th><th>Objective</th><th>Teema</th>${Object.values(objectiveCriteria).map(x=>`<th>${x}</th>`).join('')}<th>Total Score</th><th>Priority</th></tr></thead><tbody>`+
+ sorted.map((o,i)=>{
+   let s=objectiveScore(o),p=priority(s);
+   return `<tr><td class="rank">#${i+1}</td><td><b>${esc(o.name)}</b><div class="small">${esc(o.owner||'')}</div></td><td>${esc(o.theme||'')}</td><td>${o.strategic}</td><td>${o.customer}</td><td>${o.employee}</td><td>${o.business}</td><td>${o.complexity}</td><td>${o.risk}</td><td class="score">${s.toFixed(1)}</td><td><span class="pill ${p[1]}">${p[0]}</span></td></tr>`;
+ }).join('')+'</tbody></table>';
+ objectiveMatrix.querySelectorAll('.dot,.dotlabel').forEach(x=>x.remove());
+ sorted.forEach(o=>{
+   const x=4+92*((num(o.complexity)-1)/4),y=4+92*((objectiveValue(o)-1)/4);
+   objectiveMatrix.insertAdjacentHTML('beforeend',`<div class="dot" style="left:${x}%;bottom:${y}%" title="${esc(o.name)}"></div><div class="dotlabel" style="left:${x}%;bottom:${y}%">${esc(o.name)}</div>`);
+ });
+}
+function renderActions(){
+ actionRows.innerHTML=[...actions].sort((a,b)=>actionScore(b)-actionScore(a)).map(a=>{
+   const o=objectives.find(x=>x.id===a.objective),s=actionScore(a),p=priority(s);
+   return `<tr>
+    <td><input type="checkbox" ${a.selected?'checked':''} onchange="toggleAction('${a.id}',this.checked)"></td>
+    <td><b>${esc(a.name)}</b><div class="small">${esc(a.owner||'')}</div></td>
+    <td>${esc(o?.name||'–')}</td><td>${euro(a.budget)}</td><td>${a.duration} kk</td>
+    <td><div class="small">${roles.filter(r=>num(a.resources?.[r.key])>0).map(r=>`${r.label} ${num(a.resources[r.key]).toFixed(1)}`).join(' · ')}</div><b>${totalFte(a).toFixed(1)} FTE/kk</b></td>
+    <td><span class="pill ${p[1]}">${s.toFixed(1)}</span></td>
+    <td><button onclick="openAction('${a.id}')">Muokkaa</button> <button class="danger" onclick="deleteAction('${a.id}')">Poista</button></td>
+   </tr>`;
+ }).join('');
+}
+function renderActionPriority(){
+ const sorted=[...actions].sort((a,b)=>actionScore(b)-actionScore(a));
+ actionPriorityTable.innerHTML=`<table><thead><tr><th>#</th><th>Valinta</th><th>Toimenpide</th><th>OKR-tavoite</th><th>OKR-score</th><th>Vaikutus</th><th>Toteutettavuus</th><th>Kiireellisyys</th><th>Budjetti</th><th>Kesto</th><th>Total Score</th></tr></thead><tbody>`+
+ sorted.map((a,i)=>{
+   const o=objectives.find(x=>x.id===a.objective),s=actionScore(a),p=priority(s);
+   return `<tr><td class="rank">#${i+1}</td><td><input type="checkbox" ${a.selected?'checked':''} onchange="toggleAction('${a.id}',this.checked)"></td><td><b>${esc(a.name)}</b></td><td>${esc(o?.name||'–')}</td><td>${o?objectiveScore(o).toFixed(1):'–'}</td><td>${a.impact}/5</td><td>${a.feasibility}/5</td><td>${a.urgency}/5</td><td>${euro(a.budget)}</td><td>${a.duration} kk</td><td><span class="pill ${p[1]}">${s.toFixed(1)}</span></td></tr>`;
+ }).join('')+'</tbody></table>';
+}
+
+const bcDefaults={
+  type:'business',horizon:3,discount:8,ramp:0.5,investment:0,annualCost:0,otherOneOff:0,
+  savings:0,margin:0,otherBenefit:0,fteSaved:0,fteCost:90000,
+  probBefore:0,probAfter:0,riskImpact:0,avoidedLossManual:0,
+  mandatoryLevel:0,deadline:'',consequence:3,continuity:3,minimumCost:0,residualRisk:3,
+  mandatoryRationale:'',notes:''
+};
+let currentBcActionId='';
+
+function inferredBcType(action){
+  const o=objectives.find(x=>x.id===action?.objective);
+  const txt=((o?.theme||'')+' '+(o?.name||'')+' '+(action?.name||'')).toLowerCase();
+  if(txt.includes('sääntel')||txt.includes('dora')||txt.includes('fida')||txt.includes('compliance')) return 'regulation';
+  if(txt.includes('jatku')||txt.includes('resilien')||txt.includes('varautu')) return 'continuity';
+  if(txt.includes('riski')) return 'risk';
+  return 'business';
+}
+function ensureBusinessCase(actionId){
+  const a=actions.find(x=>x.id===actionId);
+  if(!a)return null;
+  if(!businessCases[actionId]){
+    businessCases[actionId]=structuredClone(bcDefaults);
+    businessCases[actionId].investment=num(a.budget);
+    businessCases[actionId].type=inferredBcType(a);
+    if(businessCases[actionId].type==='regulation')businessCases[actionId].mandatoryLevel=4;
+    if(businessCases[actionId].type==='continuity')businessCases[actionId].mandatoryLevel=5;
+  }
+  return businessCases[actionId];
+}
+function renderBusinessCase(){
+  if(!document.getElementById('bcActionSelect'))return;
+  const sorted=[...actions].sort((a,b)=>actionScore(b)-actionScore(a));
+  const previous=currentBcActionId||bcActionSelect.value;
+  bcActionSelect.innerHTML=sorted.map(a=>`<option value="${a.id}">${esc(a.name)} — ${esc(objectives.find(o=>o.id===a.objective)?.name||'')}</option>`).join('');
+  if(!sorted.length){
+    currentBcActionId='';
+    bcActionContext.innerHTML='<span class="note">Luo ensin vähintään yksi toimenpide.</span>';
+    bcSummary.innerHTML='';bcRiskSummary.innerHTML='';bcCashflow.innerHTML='';bcDecisionCallout.innerHTML='';bcInterpretation.innerHTML='';
+    return;
+  }
+  const id=sorted.some(a=>a.id===previous)?previous:sorted[0].id;
+  bcActionSelect.value=id;
+  if(currentBcActionId!==id) loadBusinessCase(id,false);
+  else renderBusinessCaseResults();
+}
+function loadBusinessCase(actionId,rerender=true){
+  const a=actions.find(x=>x.id===actionId);if(!a)return;
+  currentBcActionId=actionId;
+  const bc=ensureBusinessCase(actionId);
+  const map={
+    bcType:'type',bcHorizon:'horizon',bcDiscount:'discount',bcRamp:'ramp',
+    bcInvestment:'investment',bcAnnualCost:'annualCost',bcOtherOneOff:'otherOneOff',
+    bcSavings:'savings',bcMargin:'margin',bcOtherBenefit:'otherBenefit',
+    bcFteSaved:'fteSaved',bcFteCost:'fteCost',bcProbBefore:'probBefore',bcProbAfter:'probAfter',
+    bcRiskImpact:'riskImpact',bcAvoidedLossManual:'avoidedLossManual',bcMandatoryLevel:'mandatoryLevel',
+    bcDeadline:'deadline',bcConsequence:'consequence',bcContinuity:'continuity',
+    bcMinimumCost:'minimumCost',bcResidualRisk:'residualRisk',
+    bcMandatoryRationale:'mandatoryRationale',bcNotes:'notes'
+  };
+  Object.entries(map).forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.value=bc[k]??''});
+  const o=objectives.find(x=>x.id===a.objective),ap=priority(actionScore(a));
+  bcActionContext.innerHTML=`<span class="pill ${ap[1]}">Toimenpide ${ap[0]} · ${actionScore(a).toFixed(1)}</span><span class="pill">Budjetti ${euro(a.budget)}</span><span class="pill">${esc(o?.name||'Ei tavoitetta')}</span><span class="pill">Objective ${o?objectiveScore(o).toFixed(1):'–'}</span>`;
+  renderBusinessCaseResults();
+  if(rerender) saveBusinessCasesOnly();
+}
+function readBusinessCaseForm(){
+  return {
+    type:bcType.value,horizon:num(bcHorizon.value),discount:num(bcDiscount.value),ramp:num(bcRamp.value),
+    investment:num(bcInvestment.value),annualCost:num(bcAnnualCost.value),otherOneOff:num(bcOtherOneOff.value),
+    savings:num(bcSavings.value),margin:num(bcMargin.value),otherBenefit:num(bcOtherBenefit.value),
+    fteSaved:num(bcFteSaved.value),fteCost:num(bcFteCost.value),
+    probBefore:num(bcProbBefore.value),probAfter:num(bcProbAfter.value),riskImpact:num(bcRiskImpact.value),
+    avoidedLossManual:num(bcAvoidedLossManual.value),mandatoryLevel:num(bcMandatoryLevel.value),
+    deadline:bcDeadline.value,consequence:num(bcConsequence.value),continuity:num(bcContinuity.value),
+    minimumCost:num(bcMinimumCost.value),residualRisk:num(bcResidualRisk.value),
+    mandatoryRationale:bcMandatoryRationale.value,notes:bcNotes.value
+  };
+}
+function bcFieldChanged(){
+  if(!currentBcActionId)return;
+  businessCases[currentBcActionId]=readBusinessCaseForm();
+  saveBusinessCasesOnly();
+  renderBusinessCaseResults();
+  bcSaved.textContent='Tallennettu';
+  clearTimeout(window._bcSavedTimer);
+  window._bcSavedTimer=setTimeout(()=>bcSaved.textContent='',1200);
+}
+function saveBusinessCasesOnly(){
+  localStorage.setItem(STORAGE,JSON.stringify({objectives,actions,capacities,objectiveWeights,actionWeights,businessCases}));
+}
+function calcBusinessCase(bc){
+  const horizon=Math.max(1,num(bc.horizon)||3),r=num(bc.discount)/100;
+  const oneOff=num(bc.investment)+num(bc.otherOneOff);
+  const fteBenefit=num(bc.fteSaved)*num(bc.fteCost);
+  const riskReduction=Math.max(0,(num(bc.probBefore)-num(bc.probAfter))/100)*num(bc.riskImpact);
+  const annualGross=num(bc.savings)+num(bc.margin)+num(bc.otherBenefit)+fteBenefit+riskReduction+num(bc.avoidedLossManual);
+  const annualNet=annualGross-num(bc.annualCost);
+  const cashflows=[-oneOff];
+  for(let y=1;y<=horizon;y++) cashflows.push(annualNet*(y===1?num(bc.ramp):1));
+  const npv=cashflows.reduce((s,cf,y)=>s+cf/Math.pow(1+r,y),0);
+  const totalBenefits=Array.from({length:horizon},(_,i)=>annualGross*(i===0?num(bc.ramp):1)).reduce((a,b)=>a+b,0);
+  const totalRunCosts=num(bc.annualCost)*horizon;
+  const totalNet=totalBenefits-totalRunCosts-oneOff;
+  const roi=oneOff>0?100*totalNet/oneOff:null;
+  const payback=annualNet>0?12*oneOff/annualNet:null;
+  const beforeLoss=num(bc.probBefore)/100*num(bc.riskImpact);
+  const afterLoss=num(bc.probAfter)/100*num(bc.riskImpact);
+  const bcr=(oneOff+totalRunCosts)>0?totalBenefits/(oneOff+totalRunCosts):null;
+  return {horizon,r,oneOff,fteBenefit,riskReduction,annualGross,annualNet,cashflows,npv,totalBenefits,totalRunCosts,totalNet,roi,payback,beforeLoss,afterLoss,bcr};
+}
+function fmtPct(v){return v===null||!isFinite(v)?'–':v.toFixed(0)+' %'}
+function fmtMonths(v){return v===null||!isFinite(v)?'Ei takaisinmaksua':v.toFixed(1)+' kk'}
+function renderBusinessCaseResults(){
+  if(!currentBcActionId)return;
+  const bc=readBusinessCaseForm();
+  const c=calcBusinessCase(bc);
+  const mandatory=num(bc.mandatoryLevel)>=4||bc.type==='regulation'||bc.type==='continuity';
+  const deadlineText=bc.deadline?new Date(bc.deadline+'T00:00:00').toLocaleDateString('fi-FI'):'ei asetettu';
+  const minDelta=num(bc.minimumCost)>0?num(bc.investment)+num(bc.otherOneOff)-num(bc.minimumCost):null;
+
+  bcDecisionCallout.className='bc-callout'+(mandatory?' mandatory':'');
+  bcDecisionCallout.innerHTML=mandatory
+    ? `<b>Pakollinen / riskiperusteinen case.</b> Taloudellinen ROI ei yksin ratkaise toteutusta. Vertailun painopiste on vaatimuksen täyttämisessä, määräajassa, hyväksyttävässä jäännösriskissä ja kustannustehokkaimmassa toteutustavassa.`
+    : `<b>Liiketoimintalähtöinen case.</b> Tarkastele erityisesti NPV:tä, takaisinmaksuaikaa, ROI:ta ja hyötyjen oletusten realistisuutta.`;
+
+  const summary=[
+    ['NPV',euro(c.npv),c.npv>=0?'good':'bad'],
+    [`${c.horizon} v nettovaikutus`,euro(c.totalNet),c.totalNet>=0?'good':'bad'],
+    ['ROI',fmtPct(c.roi),c.roi!==null&&c.roi>=0?'good':'bad'],
+    ['Takaisinmaksuaika',fmtMonths(c.payback),c.payback!==null&&c.payback<=36?'good':c.payback!==null?'warn':'bad'],
+    ['Vuosihyöty',euro(c.annualGross),''],
+    ['Vuosittainen nettohyöty',euro(c.annualNet),c.annualNet>=0?'good':'bad'],
+    ['Riskin odotusarvon pieneneminen',euro(c.riskReduction),''],
+    ['Benefit / Cost',c.bcr===null?'–':c.bcr.toFixed(2),c.bcr!==null&&c.bcr>=1?'good':'warn']
+  ];
+  bcSummary.innerHTML=summary.map(([l,v,cl])=>`<div class="bc-kpi ${cl}"><div class="bc-label">${l}</div><div class="bc-value">${v}</div></div>`).join('');
+
+  let mandatoryExtra='';
+  if(mandatory){
+    mandatoryExtra=`<div class="bc-callout mandatory">
+      <b>Pakollisuuden arviointi</b><br>
+      Velvoittavuus: <b>${bc.mandatoryLevel}/5</b> · määräpäivä: <b>${deadlineText}</b> · seurauksen vakavuus: <b>${bc.consequence}/5</b> · jatkuvuuskriittisyys: <b>${bc.continuity}/5</b> · jäännösriski: <b>${bc.residualRisk}/5</b>
+      ${num(bc.minimumCost)>0?`<br>Minimitoteutus ${euro(bc.minimumCost)} · suunniteltu kertakustannus ${euro(c.oneOff)} · erotus ${euro(minDelta)}.`:''}
+      ${bc.mandatoryRationale?`<div class="small" style="margin-top:6px">${esc(bc.mandatoryRationale)}</div>`:''}
+    </div>`;
+  }
+  bcRiskSummary.innerHTML=`
+    <div class="bc-grid">
+      <div class="bc-kpi"><div class="bc-label">Riskin odotusarvo ennen</div><div class="bc-value">${euro(c.beforeLoss)}</div></div>
+      <div class="bc-kpi"><div class="bc-label">Riskin odotusarvo jälkeen</div><div class="bc-value">${euro(c.afterLoss)}</div></div>
+    </div>
+    <div class="small" style="margin-top:8px">Laskennallinen riskivähennys vuodessa: <b>${euro(c.riskReduction)}</b>. Tämä on odotusarvolaskenta, ei toteutuvan vahingon ennuste.</div>
+    ${mandatoryExtra}`;
+
+  let cumulative=0,rows='';
+  c.cashflows.forEach((cf,y)=>{
+    cumulative+=cf;
+    const pv=cf/Math.pow(1+c.r,y);
+    rows+=`<tr><td>${y===0?'Investointi':'Vuosi '+y}</td><td>${euro(cf)}</td><td>${euro(pv)}</td><td>${euro(cumulative)}</td></tr>`;
+  });
+  bcCashflow.innerHTML=`<table class="bc-cashflow"><thead><tr><th>Jakso</th><th>Kassavirta</th><th>Nykyarvo</th><th>Kumulatiivinen</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  const interpretations=[];
+  if(c.annualNet<=0) interpretations.push('Vuosittainen nettohyöty ei nykyisillä oletuksilla kata jatkuvia kustannuksia.');
+  else if(c.payback!==null) interpretations.push(`Investointi maksaa yksinkertaistetulla laskennalla takaisin noin ${c.payback.toFixed(1)} kuukaudessa.`);
+  if(c.npv>=0) interpretations.push(`Nykyarvo on positiivinen ${c.horizon} vuoden tarkastelussa.`);
+  else interpretations.push(`Nykyarvo jää negatiiviseksi ${c.horizon} vuoden tarkastelussa.`);
+  if(mandatory) interpretations.push('Pakollisessa sääntely- tai jatkuvuustoimenpiteessä negatiivinen NPV ei yksin tarkoita, ettei toimenpidettä pitäisi toteuttaa. Vertaa vaihtoehtoja erityisesti minimitoteutuksen kustannukseen, määräaikaan ja jäännösriskiin.');
+  if(num(bc.minimumCost)>0&&minDelta!==null&&minDelta>0) interpretations.push(`Suunniteltu kertakustannus ylittää annetun minimitoteutuksen kustannuksen ${euro(minDelta)}; tämän lisäpanoksen pitäisi perustua lisähyötyyn, pienempään riskiin tai parempaan strategiseen lopputulokseen.`);
+  if(bc.type==='regulation'&&num(bc.mandatoryLevel)<4) interpretations.push('Case on merkitty sääntelyksi, mutta velvoittavuus on alle 4/5 — tarkista luokittelu.');
+  bcInterpretation.innerHTML='<ul style="margin:0;padding-left:18px">'+interpretations.map(x=>`<li style="margin:5px 0">${x}</li>`).join('')+'</ul>';
+}
+
+function renderRoadmap(){
+ let h=`<div class="cell head">OKR-tavoite / toimenpide</div>`+months.map(m=>`<div class="cell head">${m}</div>`).join('');
+ let body=objectives.map(o=>{
+   let aa=actions.filter(a=>a.objective===o.id&&a.selected).sort((a,b)=>(a.start||99)-(b.start||99)||actionScore(b)-actionScore(a));
+   let os=objectiveScore(o);
+   let r=`<div class="cell goalhead">${esc(o.name)}<span class="goalmeta">${aa.length} valittua · Objective score ${os.toFixed(1)}</span></div>`;
+   for(let m=1;m<=12;m++){
+     let active=aa.filter(a=>isActive(a,m));
+     r+=`<div class="cell goalhead">${active.length?`<b>${active.length}</b><span class="goalmeta">${active.reduce((s,a)=>s+totalFte(a),0).toFixed(1)} FTE</span>`:''}</div>`;
+   }
+   if(!aa.length){
+     r+=`<div class="cell actionlabel"><span class="small">Ei valittuja toimenpiteitä</span></div>`+months.map(()=>`<div class="cell"></div>`).join('');
+   } else aa.forEach(a=>{
+     r+=`<div class="cell actionlabel ${a.start?'':'unscheduled'}"><b>${esc(a.name)}</b><br><span class="small">${a.start?months[a.start-1]:'Ei aikataulutettu'} · ${a.duration} kk · ${totalFte(a).toFixed(1)} FTE/kk · ${actionScore(a).toFixed(1)}p</span></div>`;
+     for(let m=1;m<=12;m++){
+       let active=isActive(a,m);
+       r+=`<div class="cell ${active?'activecell':''}" ondragover="event.preventDefault()" ondrop="dropAction(event,${m})">${m===num(a.start)?`<div class="actioncard" draggable="true" ondragstart="dragAction(event,'${a.id}')">${esc(a.name)}<small>${a.duration} kk · ${actionScore(a).toFixed(1)}p</small></div>`:''}</div>`;
+     }
+   });
+   return r;
+ }).join('');
+ roadgrid.innerHTML=h+body;
+}
+function renderResources(){
+ capacityHead.innerHTML='<th>Rooli</th><th>Toiminto</th>'+months.map(m=>`<th>${m}</th>`).join('');
+ capacityRows.innerHTML=roles.map(r=>`<tr><td><b>${r.label}</b></td><td><button onclick="setYearCapacity('${r.key}')">Aseta koko vuosi</button></td>`+
+ months.map((m,i)=>`<td><input type="number" min="0" step="0.1" value="${capacity(r.key,i+1)}" onchange="setCapacity('${r.key}',${i+1},this.value)"></td>`).join('')+'</tr>').join('');
+}
+const chartColors=['#3157d5','#027a48','#b54708','#9e3fb4','#d92d20','#0e7090','#7a5af8','#667085'];
+function lineChartSVG(series,{maxY=100,reference=null,suffix='%',height=420}={}){
+ const width=1200,left=65,right=25,top=24,bottom=48,pw=width-left-right,ph=height-top-bottom;
+ const x=i=>left+pw*(i/(months.length-1)), y=v=>top+ph-(Math.max(0,Math.min(maxY,v))/maxY)*ph;
+ let svg=`<svg viewBox="0 0 ${width} ${height}">`;
+ for(let t=0;t<=5;t++){let val=maxY*t/5,yy=y(val);svg+=`<line class="svg-grid" x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}"/><text class="svg-label" x="${left-9}" y="${yy+4}" text-anchor="end">${Math.round(val)}${suffix}</text>`}
+ months.forEach((m,i)=>{let xx=x(i);svg+=`<line class="svg-grid" x1="${xx}" y1="${top}" x2="${xx}" y2="${top+ph}"/><text class="svg-label" x="${xx}" y="${height-19}" text-anchor="middle">${m}</text>`});
+ if(reference!==null&&reference<=maxY){let yy=y(reference);svg+=`<line class="svg-ref" x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}"/>`}
+ series.forEach((s,si)=>{let c=chartColors[si%chartColors.length],pts=s.values.map((v,i)=>`${x(i)},${y(v)}`).join(' ');svg+=`<polyline points="${pts}" fill="none" stroke="${c}" stroke-width="3"/>`;s.values.forEach((v,i)=>svg+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" fill="${c}" stroke="#fff" stroke-width="1.5"><title>${s.name}: ${months[i]} ${Number(v).toFixed(0)}${suffix}</title></circle>`)});
+ return svg+'</svg>';
+}
+function renderUtilization(){
+ const series=roles.map(r=>({name:r.label,values:months.map((_,i)=>{let v=utilization(r.key,i+1);return v>=999?200:v})}));
+ const mx=Math.max(120,Math.ceil(Math.max(100,...series.flatMap(s=>s.values))/20)*20);
+ utilChart.innerHTML=lineChartSVG(series,{maxY:mx,reference:100});
+ utilLegend.innerHTML=series.map((s,i)=>`<span class="legenditem"><i class="legendline" style="background:${chartColors[i%chartColors.length]}"></i>${s.name}</span>`).join('')+'<span class="legenditem"><i class="legendline" style="border-top:2px dashed #b42318"></i>100 %</span>';
+ utilSummary.innerHTML=roles.map(r=>{let vals=months.map((_,i)=>utilization(r.key,i+1)),pk=Math.max(...vals),idx=vals.indexOf(pk);return `<div class="summarycard ${pk>100?'util-over':pk>=90?'util-warn':'util-ok'}"><b>${r.label}</b>Huippu ${pk>=999?'∞':Math.round(pk)+' %'} (${months[idx]})<div class="small">${roleMonth(r.key,idx+1).toFixed(1)} / ${capacity(r.key,idx+1).toFixed(1)} FTE</div></div>`}).join('');
+}
+function renderImpact(){
+ const series=objectives.map(o=>{let p=plannedImpact(o.id);return{name:o.name,planned:p,values:months.map((_,i)=>p?100*realizedImpact(o.id,i+1)/p:0)}});
+ impactChart.innerHTML=lineChartSVG(series,{maxY:100,reference:null});
+ impactLegend.innerHTML=series.map((s,i)=>`<span class="legenditem"><i class="legendline" style="background:${chartColors[i%chartColors.length]}"></i>${esc(s.name)}</span>`).join('');
+ impactSummary.innerHTML=series.map(s=>{let first=s.values.findIndex(v=>v>0),full=s.values.findIndex(v=>v>=99.99);return `<div class="summarycard"><b>${esc(s.name)}</b>Valittu vaikutus ${s.planned.toFixed(0)} p<div class="small">Ensimmäinen: ${first>=0?months[first]:'–'} · 100 %: ${full>=0?months[full]:'ei vuoden aikana'}</div></div>`}).join('');
+}
+function renderSettings(){
+ objectiveWeights.innerHTML=Object.entries(objectiveWeights).map(([k,v])=>`<div class="weight"><b>${objectiveCriteria[k]}</b><span id="ow_${k}">${v}</span> %<input type="range" min="0" max="50" value="${v}" oninput="objectiveWeights.${k}=+this.value;document.getElementById('ow_${k}').textContent=this.value;save()"></div>`).join('');
+ actionWeights.innerHTML=Object.entries(actionWeights).map(([k,v])=>`<div class="weight"><b>${actionCriteria[k]}</b><span id="aw_${k}">${v}</span> %<input type="range" min="0" max="50" value="${v}" oninput="actionWeights.${k}=+this.value;document.getElementById('aw_${k}').textContent=this.value;save()"></div>`).join('');
+}
+
+function addKRRow(kr={name:'',baseline:'',target:'',unit:''}){
+ krEditor.insertAdjacentHTML('beforeend',`<div class="krrow"><input class="kr-name" placeholder="Key Result" value="${esc(kr.name)}"><input class="kr-base" type="number" step="any" placeholder="Lähtö" value="${esc(kr.baseline)}"><input class="kr-target" type="number" step="any" placeholder="Tavoite" value="${esc(kr.target)}"><input class="kr-unit" placeholder="Yksikkö" value="${esc(kr.unit)}"><button type="button" class="danger" onclick="this.parentElement.remove()">×</button></div>`);
+}
+function openObjective(id){
+ const o=id?objectives.find(x=>x.id===id):{id:'',name:'',owner:'',description:'',theme:'',horizon:'2026',strategic:3,customer:3,employee:3,business:3,complexity:3,risk:3,krs:[]};
+ objectiveDialogTitle.textContent=id?'Muokkaa OKR-tavoitetta':'Uusi OKR-tavoite';
+ ['id','name','owner','description','theme','horizon','strategic','customer','employee','business','complexity','risk'].forEach(k=>objectiveForm.elements[k].value=o[k]??'');
+ krEditor.innerHTML='';(o.krs||[]).forEach(addKRRow);if(!(o.krs||[]).length)addKRRow();
+ objectiveDialog.showModal();
+}
+objectiveForm.onsubmit=e=>{
+ e.preventDefault();let d=Object.fromEntries(new FormData(objectiveForm));
+ ['strategic','customer','employee','business','complexity','risk'].forEach(k=>d[k]=num(d[k]));
+ d.krs=[...krEditor.querySelectorAll('.krrow')].map(r=>({name:r.querySelector('.kr-name').value.trim(),baseline:r.querySelector('.kr-base').value,target:r.querySelector('.kr-target').value,unit:r.querySelector('.kr-unit').value.trim()})).filter(k=>k.name);
+ if(d.id){Object.assign(objectives.find(o=>o.id===d.id),d)}else{d.id='o'+Date.now();objectives.push(d)}
+ objectiveDialog.close();save();
+};
+function deleteObjective(id){
+ if(actions.some(a=>a.objective===id)){alert('Tavoitteella on toimenpiteitä. Siirrä tai poista ne ensin.');return}
+ if(confirm('Poistetaanko OKR-tavoite?')){objectives=objectives.filter(o=>o.id!==id);save()}
+}
+
+function openAction(id){
+ if(!objectives.length){alert('Luo ensin vähintään yksi OKR-tavoite.');return}
+ const a=id?actions.find(x=>x.id===id):{id:'',name:'',objective:objectives[0].id,budget:100000,duration:3,impact:3,feasibility:3,urgency:3,start:0,owner:'',dependencies:'',selected:false,resources:{dev:1,arch:.2,pm:.3,sec:.1,test:.5}};
+ actionDialogTitle.textContent=id?'Muokkaa toimenpidettä':'Uusi toimenpide';
+ actionForm.objective.innerHTML=objectives.map(o=>`<option value="${o.id}">${esc(o.name)}</option>`).join('');
+ actionForm.start.innerHTML=`<option value="0">Ei aikataulutettu</option>`+months.map((m,i)=>`<option value="${i+1}">${m}</option>`).join('');
+ ['id','name','objective','budget','duration','impact','feasibility','urgency','start','owner','dependencies'].forEach(k=>actionForm.elements[k].value=a[k]??'');
+ actionForm.selected.checked=!!a.selected;
+ roleInputs.innerHTML=roles.map(r=>`<label>${r.label}<input name="res_${r.key}" type="number" min="0" step="0.1" value="${num(a.resources?.[r.key])}"></label>`).join('');
+ actionDialog.showModal();
+}
+actionForm.onsubmit=e=>{
+ e.preventDefault();let d=Object.fromEntries(new FormData(actionForm));
+ ['budget','duration','impact','feasibility','urgency','start'].forEach(k=>d[k]=num(d[k]));d.selected=actionForm.selected.checked;d.resources={};
+ roles.forEach(r=>d.resources[r.key]=num(actionForm.elements['res_'+r.key].value));
+ if(d.id){Object.assign(actions.find(a=>a.id===d.id),d)}else{d.id='a'+Date.now();actions.push(d)}
+ actionDialog.close();save();
+};
+function deleteAction(id){if(confirm('Poistetaanko toimenpide?')){actions=actions.filter(a=>a.id!==id);delete businessCases[id];if(currentBcActionId===id)currentBcActionId='';save()}}
+function toggleAction(id,v){let a=actions.find(x=>x.id===id);if(a){a.selected=v;if(!v)a.start=0;save()}}
+function selectTopActions(){actions.forEach(a=>a.selected=actionScore(a)>=65);save()}
+
+let dragId=null;
+function dragAction(e,id){dragId=id;e.dataTransfer.setData('text/plain',id)}
+function dropAction(e,m){let id=e.dataTransfer.getData('text/plain')||dragId,a=actions.find(x=>x.id===id);if(a){a.start=m;save()}}
+
+function fits(a,start,usage){
+ if(start<1||start+num(a.duration)-1>12)return false;
+ for(let m=start;m<start+num(a.duration);m++){
+   for(const r of roles){
+     if((usage[r.key][m-1]+num(a.resources?.[r.key]))>capacity(r.key,m)+1e-9)return false;
+   }
+ }
+ return true;
+}
+function addUsage(a,start,usage){for(let m=start;m<start+num(a.duration);m++)roles.forEach(r=>usage[r.key][m-1]+=num(a.resources?.[r.key]))}
+function autoSchedule(){
+ const usage=Object.fromEntries(roles.map(r=>[r.key,Array(12).fill(0)]));
+ const selected=[...actions].filter(a=>a.selected).sort((a,b)=>actionScore(b)-actionScore(a));
+ selected.forEach(a=>a.start=0);
+ let unscheduled=[];
+ selected.forEach(a=>{
+   let placed=false;
+   for(let m=1;m<=12-num(a.duration)+1;m++){
+     if(fits(a,m,usage)){a.start=m;addUsage(a,m,usage);placed=true;break}
+   }
+   if(!placed)unscheduled.push(a.name);
+ });
+ scheduleMessage.innerHTML=unscheduled.length?`<div class="panel" style="margin-bottom:10px;background:#fff7e6"><b>${unscheduled.length} toimenpidettä ei mahtunut kapasiteettiin:</b> ${unscheduled.map(esc).join(', ')}</div>`:`<div class="panel" style="margin-bottom:10px;background:#ecfdf3"><b>Kaikki valitut toimenpiteet aikataulutettiin kapasiteetin puitteissa.</b></div>`;
+ save();
+}
+function clearSchedule(){selectedActions().forEach(a=>a.start=0);save()}
+function setCapacity(key,m,v){capacities[key][m-1]=num(v);save()}
+function setYearCapacity(key){let v=prompt('Anna '+roles.find(r=>r.key===key).label+'-roolin FTE-kapasiteetti koko vuodelle',capacity(key,1));if(v!==null&&v!==''){capacities[key]=Array(12).fill(num(v));save()}}
+
+function resetObjectiveWeights(){objectiveWeights=structuredClone(defaultObjectiveWeights);save()}
+function resetActionWeights(){actionWeights=structuredClone(defaultActionWeights);save()}
+
+
+function localIsoDate(){
+  const d=new Date(),pad=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+function buildAIAnalysisPackage(){
+  const selected=selectedActions();
+  const objectiveRanking=[...objectives].sort((a,b)=>objectiveScore(b)-objectiveScore(a));
+  const actionRanking=[...actions].sort((a,b)=>actionScore(b)-actionScore(a));
+  const objectiveRank=new Map(objectiveRanking.map((o,i)=>[o.id,i+1]));
+  const actionRank=new Map(actionRanking.map((a,i)=>[a.id,i+1]));
+
+  const capacityMonthly=roles.map(r=>({
+    role_key:r.key,
+    role:r.label,
+    months:months.map((month,i)=>{
+      const cap=capacity(r.key,i+1),used=roleMonth(r.key,i+1);
+      return {
+        month_number:i+1,
+        month,
+        capacity_fte:+cap.toFixed(2),
+        used_fte:+used.toFixed(2),
+        utilization_pct:cap>0?+(100*used/cap).toFixed(1):null,
+        status:cap<=0&&used>0?'capacity_missing':(cap>0&&used>cap?'over_capacity':(cap>0&&used>=.9*cap?'near_capacity':'ok'))
+      };
+    })
+  }));
+
+  const capacityFindings=capacityMonthly.flatMap(r=>r.months
+    .filter(m=>m.status==='over_capacity'||m.status==='capacity_missing')
+    .map(m=>({role:r.role,month:m.month,month_number:m.month_number,capacity_fte:m.capacity_fte,used_fte:m.used_fte,utilization_pct:m.utilization_pct,status:m.status}))
+  ).sort((a,b)=>(b.utilization_pct??999)-(a.utilization_pct??999));
+
+  const objectiveData=objectiveRanking.map(o=>{
+    const related=actions.filter(a=>a.objective===o.id);
+    const chosen=related.filter(a=>a.selected);
+    const planned=plannedImpact(o.id);
+    const monthlyImpact=months.map((m,i)=>({
+      month_number:i+1,
+      month:m,
+      realized_impact_points:+realizedImpact(o.id,i+1).toFixed(1),
+      realized_pct:planned?+(100*realizedImpact(o.id,i+1)/planned).toFixed(1):0
+    }));
+    const finishMonths=chosen.filter(a=>finishMonth(a)>0).map(a=>finishMonth(a));
+    return {
+      id:o.id,
+      name:o.name,
+      description:o.description||'',
+      theme:o.theme||'',
+      owner:o.owner||'',
+      horizon:o.horizon||'',
+      priority_score:+objectiveScore(o).toFixed(1),
+      priority_rank:objectiveRank.get(o.id),
+      priority_class:priority(objectiveScore(o))[0],
+      criteria:{
+        strategic_alignment:num(o.strategic),
+        customer_value:num(o.customer),
+        employee_value:num(o.employee),
+        business_value:num(o.business),
+        complexity:num(o.complexity),
+        risk_opportunity:num(o.risk)
+      },
+      key_results:(o.krs||[]).map(k=>({
+        name:k.name||'',
+        baseline:k.baseline===''?null:num(k.baseline),
+        target:k.target===''?null:num(k.target),
+        unit:k.unit||''
+      })),
+      portfolio_linkage:{
+        action_proposals:related.length,
+        selected_actions:chosen.length,
+        selected_budget_eur:chosen.reduce((s,a)=>s+num(a.budget),0),
+        selected_impact_points:chosen.reduce((s,a)=>s+num(a.impact),0),
+        scheduled_selected_actions:chosen.filter(a=>num(a.start)>0).length,
+        first_impact_month:finishMonths.length?Math.min(...finishMonths):null,
+        last_impact_month:finishMonths.length?Math.max(...finishMonths):null,
+        monthly_realization:monthlyImpact
+      }
+    };
+  });
+
+  const actionData=actionRanking.map(a=>{
+    const o=objectives.find(x=>x.id===a.objective);
+    const rawBc=businessCases[a.id]||null;
+    const calc=rawBc?calcBusinessCase(rawBc):null;
+    const mandatory=!!rawBc&&(num(rawBc.mandatoryLevel)>=4||rawBc.type==='regulation'||rawBc.type==='continuity');
+    return {
+      id:a.id,
+      name:a.name,
+      objective_id:a.objective,
+      objective_name:o?.name||'',
+      objective_priority_score:o?+objectiveScore(o).toFixed(1):null,
+      objective_priority_rank:o?objectiveRank.get(o.id):null,
+      owner:a.owner||'',
+      dependencies:a.dependencies||'',
+      selected:!!a.selected,
+      priority_score:+actionScore(a).toFixed(1),
+      priority_rank:actionRank.get(a.id),
+      priority_class:priority(actionScore(a))[0],
+      evaluation:{
+        impact:num(a.impact),
+        feasibility:num(a.feasibility),
+        urgency:num(a.urgency)
+      },
+      budget_eur:num(a.budget),
+      duration_months:num(a.duration),
+      start_month:num(a.start)||null,
+      finish_month:finishMonth(a)||null,
+      resources_fte_per_active_month:Object.fromEntries(roles.map(r=>[r.key,num(a.resources?.[r.key])])),
+      total_fte_per_active_month:+totalFte(a).toFixed(2),
+      business_case:rawBc?{
+        type:rawBc.type,
+        mandatory,
+        inputs:{
+          horizon_years:num(rawBc.horizon),
+          discount_rate_pct:num(rawBc.discount),
+          first_year_benefit_ramp:num(rawBc.ramp),
+          investment_eur:num(rawBc.investment),
+          annual_cost_eur:num(rawBc.annualCost),
+          other_one_off_eur:num(rawBc.otherOneOff),
+          annual_savings_eur:num(rawBc.savings),
+          annual_margin_effect_eur:num(rawBc.margin),
+          annual_other_benefit_eur:num(rawBc.otherBenefit),
+          fte_saved:num(rawBc.fteSaved),
+          fte_annual_cost_eur:num(rawBc.fteCost),
+          risk_probability_before_pct:num(rawBc.probBefore),
+          risk_probability_after_pct:num(rawBc.probAfter),
+          risk_financial_impact_eur:num(rawBc.riskImpact),
+          annual_avoided_loss_manual_eur:num(rawBc.avoidedLossManual),
+          mandatory_level:num(rawBc.mandatoryLevel),
+          deadline:rawBc.deadline||null,
+          consequence_severity:num(rawBc.consequence),
+          continuity_criticality:num(rawBc.continuity),
+          minimum_compliance_cost_eur:num(rawBc.minimumCost),
+          residual_risk:num(rawBc.residualRisk),
+          mandatory_rationale:rawBc.mandatoryRationale||'',
+          notes:rawBc.notes||''
+        },
+        calculated:{
+          npv_eur:+calc.npv.toFixed(0),
+          total_net_effect_eur:+calc.totalNet.toFixed(0),
+          roi_pct:calc.roi===null?null:+calc.roi.toFixed(1),
+          payback_months:calc.payback===null?null:+calc.payback.toFixed(1),
+          annual_gross_benefit_eur:+calc.annualGross.toFixed(0),
+          annual_net_benefit_eur:+calc.annualNet.toFixed(0),
+          risk_expected_value_reduction_eur:+calc.riskReduction.toFixed(0),
+          expected_loss_before_eur:+calc.beforeLoss.toFixed(0),
+          expected_loss_after_eur:+calc.afterLoss.toFixed(0),
+          benefit_cost_ratio:calc.bcr===null?null:+calc.bcr.toFixed(2),
+          one_off_cost_eur:+calc.oneOff.toFixed(0)
+        }
+      }:null
+    };
+  });
+
+  const mandatoryActions=actionData.filter(a=>a.business_case?.mandatory);
+  const selectedBc=actionData.filter(a=>a.selected&&a.business_case);
+  const positiveNpv=selectedBc.filter(a=>a.business_case.calculated.npv_eur>=0);
+  const negativeNpv=selectedBc.filter(a=>a.business_case.calculated.npv_eur<0);
+  const unscheduledSelected=actionData.filter(a=>a.selected&&!a.start_month);
+  const missingBc=actionData.filter(a=>a.selected&&!a.business_case);
+  const uncoveredObjectives=objectiveData.filter(o=>o.portfolio_linkage.selected_actions===0);
+  const mandatoryMissing=mandatoryActions.filter(a=>{
+    const i=a.business_case.inputs;
+    return !i.deadline||i.minimum_compliance_cost_eur<=0||!String(i.mandatory_rationale||'').trim();
+  });
+
+  const objectiveSpend=objectiveData.map(o=>({name:o.name,score:o.priority_score,budget_eur:o.portfolio_linkage.selected_budget_eur}))
+    .sort((a,b)=>b.budget_eur-a.budget_eur);
+  const topObjective=objectiveData[0]||null;
+  const topSpend=objectiveSpend[0]||null;
+
+  const managementSignals=[];
+  if(capacityFindings.length)managementSignals.push({
+    type:'capacity',
+    severity:'high',
+    finding:`Kapasiteetti ylittyy ${capacityFindings.length} rooli–kuukausiyhdistelmässä.`,
+    evidence:capacityFindings.slice(0,5)
+  });
+  if(unscheduledSelected.length)managementSignals.push({
+    type:'scheduling',
+    severity:'medium',
+    finding:`${unscheduledSelected.length} valittua toimenpidettä ei ole aikataulutettu.`,
+    evidence:unscheduledSelected.map(a=>a.name)
+  });
+  if(uncoveredObjectives.length)managementSignals.push({
+    type:'strategy_coverage',
+    severity:'medium',
+    finding:`${uncoveredObjectives.length} OKR-tavoitteella ei ole valittua toteutustoimenpidettä.`,
+    evidence:uncoveredObjectives.map(o=>o.name)
+  });
+  if(topObjective&&topSpend&&topObjective.name!==topSpend.name&&topSpend.budget_eur>0)managementSignals.push({
+    type:'budget_alignment',
+    severity:'medium',
+    finding:'Suurin valittu budjetti ei kohdistu korkeimman prioriteetin OKR-tavoitteeseen.',
+    evidence:{highest_priority_objective:topObjective.name,highest_spend_objective:topSpend.name,highest_spend_budget_eur:topSpend.budget_eur}
+  });
+  if(missingBc.length)managementSignals.push({
+    type:'business_case_coverage',
+    severity:'medium',
+    finding:`${missingBc.length} valitulta toimenpiteeltä puuttuu business case.`,
+    evidence:missingBc.map(a=>a.name)
+  });
+  if(negativeNpv.length)managementSignals.push({
+    type:'business_case',
+    severity:'medium',
+    finding:`${negativeNpv.length} valitun toimenpiteen NPV on negatiivinen nykyisillä oletuksilla.`,
+    evidence:negativeNpv.map(a=>({name:a.name,npv_eur:a.business_case.calculated.npv_eur,mandatory:a.business_case.mandatory}))
+  });
+  if(mandatoryMissing.length)managementSignals.push({
+    type:'mandatory_case_quality',
+    severity:'high',
+    finding:`${mandatoryMissing.length} pakollisesta toimenpiteestä puuttuu määräpäivä, minimitoteutuksen kustannus tai kirjallinen velvoittavuusperustelu.`,
+    evidence:mandatoryMissing.map(a=>a.name)
+  });
+
+  const dataQuality={
+    objectives_without_key_results:objectiveData.filter(o=>!o.key_results.length).map(o=>o.name),
+    selected_actions_without_schedule:unscheduledSelected.map(a=>a.name),
+    selected_actions_without_business_case:missingBc.map(a=>a.name),
+    mandatory_cases_with_incomplete_basis:mandatoryMissing.map(a=>a.name)
+  };
+
+  const portfolioSummary={
+    objective_count:objectives.length,
+    action_proposal_count:actions.length,
+    selected_action_count:selected.length,
+    selected_action_rate_pct:actions.length?+(100*selected.length/actions.length).toFixed(1):0,
+    selected_budget_eur:selected.reduce((s,a)=>s+num(a.budget),0),
+    all_action_budget_eur:actions.reduce((s,a)=>s+num(a.budget),0),
+    weighted_strategic_coverage_pct:+weightedObjectiveCoverage().toFixed(1),
+    scheduled_selected_action_count:selected.filter(a=>num(a.start)>0).length,
+    scheduled_selected_pct:selected.length?+(100*selected.filter(a=>num(a.start)>0).length/selected.length).toFixed(1):0,
+    capacity_overload_count:capacityFindings.length,
+    selected_actions_with_business_case:selectedBc.length,
+    selected_business_cases_positive_npv:positiveNpv.length,
+    selected_business_cases_negative_npv:negativeNpv.length,
+    mandatory_action_count:mandatoryActions.length
+  };
+
+  const currentExecutiveText=(document.getElementById('executiveSummary')?.innerText||'').trim();
+  const currentDecisionText=(document.getElementById('executiveActions')?.innerText||'').trim();
+
+  return {
+    package_type:'OKR_PORTFOLIO_LLM_BRIEFING',
+    schema_version:'1.0',
+    generated_at:new Date().toISOString(),
+    generated_local_date:localIsoDate(),
+    source_application:'OKR → Portfolio v1.6',
+    purpose:'Jäsennelty aineisto ulkopuolisen LLM:n tuottamaa johdon portfolioanalyysiä varten.',
+    usage_note:'Lataa tämä JSON LLM-palveluun ja pyydä sitä noudattamaan ai_instructions-kenttää. Numerot ja laskelmat ovat lähdejärjestelmän tuottamia; LLM:n tulee keskittyä niiden tulkintaan ja raportointiin.',
+    ai_instructions:{
+      language:'Finnish',
+      audience:'Johtoryhmä / ylin johto',
+      task:'Laadi aineistosta tiivis mutta analyyttinen johdon salkkuraportti. Muodosta kokonaisnäkemys, älä vain toista numeroita.',
+      requested_structure:[
+        '1. Johdon tiivistelmä: 5–8 virkettä tärkeimmistä havainnoista.',
+        '2. Strateginen kohdistuminen: vastaavatko valinnat OKR-prioriteetteja ja strategisia teemoja.',
+        '3. Toteutussalkun tasapaino: valitut vs. valitsemattomat, budjetti, riippuvuudet ja prioriteetit.',
+        '4. Toteutuskyky ja resurssit: kapasiteettipullonkaulat, aikataulutus ja toteutusriski.',
+        '5. Taloudelliset business caset: NPV, takaisinmaksu, hyöty–kustannus sekä oletuksiin liittyvät epävarmuudet.',
+        '6. Sääntely ja jatkuvuus: arvioi pakolliset toimenpiteet erikseen; älä käytä ROI:ta yksin niiden onnistumisen mittarina.',
+        '7. Vaikuttavuuden ajoitus: milloin hyödyt alkavat ja missä tavoitteissa ne realisoituvat myöhään.',
+        '8. Päätöstä vaativat asiat: 3–7 konkreettista kysymystä tai päätöspistettä johdolle.'
+      ],
+      rules:[
+        'Perusta kaikki faktaväitteet tämän tiedoston tietoihin.',
+        'Älä keksi puuttuvia lukuja, määräaikoja, riippuvuuksia tai hyötyjä.',
+        'Erottele selvästi lähdedataan perustuva fakta ja oma tulkinta.',
+        'Älä laske lähdejärjestelmän valmiita tunnuslukuja uudelleen ilman erityistä syytä.',
+        'Nosta esiin ristiriidat, esimerkiksi korkea strateginen prioriteetti mutta pieni investointiosuus tai valittu P1-toimenpide ilman aikataulua.',
+        'Pakollisissa sääntely- ja jatkuvuustoimenpiteissä arvioi ensisijaisesti vaatimuksen täyttymistä, määräaikaa, minimitoteutusta ja jäännösriskiä; taloudellinen ROI on täydentävä näkökulma.',
+        'Jos data on puutteellista, nimeä puute sen sijaan että täyttäisit sen oletuksella.',
+        'Kirjoita johtotasolle: keskity merkitykseen, trade-offeihin, riskeihin ja päätöksiin.'
+      ]
+    },
+    current_rule_based_summary:{
+      executive_summary:currentExecutiveText,
+      decision_points:currentDecisionText
+    },
+    portfolio_summary:portfolioSummary,
+    objective_prioritization_weights:{...objectiveWeights},
+    action_prioritization_weights:{...actionWeights},
+    objectives:objectiveData,
+    actions:actionData,
+    mandatory_and_continuity_actions:mandatoryActions,
+    capacity:{
+      roles:capacityMonthly,
+      overload_findings:capacityFindings
+    },
+    management_signals:managementSignals,
+    data_quality:dataQuality
+  };
+}
+function exportAIAnalysis(){
+  const pack=buildAIAnalysisPackage();
+  const json=JSON.stringify(pack,null,2);
+  const blob=new Blob([json],{type:'application/json;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`okr_portfolio_ai_analysis_${localIsoDate()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  const status=document.getElementById('aiExportStatus');
+  if(status){
+    status.textContent='AI-paketti ladattu';
+    clearTimeout(window._aiExportTimer);
+    window._aiExportTimer=setTimeout(()=>status.textContent='',2200);
+  }
+}
+
+
+function exportBackup(){
+ const blob=new Blob([JSON.stringify({version:2,objectives,actions,capacities,objectiveWeights,actionWeights,businessCases},null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='okr_portfolio_backup.json';a.click();URL.revokeObjectURL(url);
+}
+backupImporter.onchange=async e=>{
+ let f=e.target.files[0];if(!f)return;
+ try{
+   let d=JSON.parse(await f.text());
+   if(!Array.isArray(d.objectives)||!Array.isArray(d.actions))throw new Error('Virheellinen tiedosto');
+   objectives=d.objectives;actions=d.actions;capacities=d.capacities||structuredClone(demoCapacities);objectiveWeights=d.objectiveWeights||structuredClone(defaultObjectiveWeights);actionWeights=d.actionWeights||structuredClone(defaultActionWeights);businessCases=d.businessCases||{};save();
+ }catch(err){alert('Varmuuskopion tuonti epäonnistui: '+err.message)}
+ e.target.value='';
+};
+function exportActionsCSV(){
+ const rows=[['Toimenpide','OKR-tavoite','Valittu','Budjetti','Kesto_kk','Aloitus_kk','Vaikuttavuus','Toteutettavuus','Kiireellisyys','Pisteet','Omistaja',...roles.map(r=>r.label+'_FTE')]];
+ actions.forEach(a=>rows.push([a.name,objectives.find(o=>o.id===a.objective)?.name||'',a.selected?'Kyllä':'Ei',a.budget,a.duration,a.start,a.impact,a.feasibility,a.urgency,actionScore(a).toFixed(1),a.owner,...roles.map(r=>num(a.resources?.[r.key]))]));
+ const csv='\ufeff'+rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(';')).join('\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='okr_portfolio_toimenpiteet.csv';a.click();URL.revokeObjectURL(url);
+}
+
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button,.view').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.v).classList.add('active')});
+render();
+</script>
+</body>
+</html>
